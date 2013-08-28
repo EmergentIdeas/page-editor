@@ -1,0 +1,6 @@
+$(function() {
+	$('.page-editor-view-image').on('click', function () {
+		window.opener.CKEDITOR.tools.callFunction(__CKEditorFuncNum__, $(this).attr('data-browse-url'));
+		window.close();
+	});
+});

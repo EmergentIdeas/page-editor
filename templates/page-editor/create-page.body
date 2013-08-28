@@ -1,0 +1,28 @@
+<h1>Create New Page</h1>
+__::messages__
+<form method="post" action="/files/create">
+	<div class="control-group">
+		<label class="control-label" for="pageName">Page name:</label>
+		<div class="controls">
+			<input type="text" id="pageName" placeholder="The new page name" name="pageName">.html
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="template">Template:</label>
+		<div class="controls">
+			<select id="template" name="template">
+				__templateNames::page-editor/option__
+			</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="destination">Page location:</label>
+		<div class="controls">
+			<select id="destination" name="destination">
+				__destinations::page-editor/option__
+			</select>
+		</div>
+	</div>
+	
+	<button type="submit">Create</button>
+</form>

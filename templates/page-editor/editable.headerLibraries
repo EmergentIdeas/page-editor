@@ -1,0 +1,4 @@
+__webAppContextPath__/page-editor/ckeditor/ckeditor.js
+__webAppContextPath__/page-editor/ckeditor/adapters/jquery.js
+__webAppContextPath__/page-editor/js/page-editor.js
+

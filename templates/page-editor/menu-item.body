@@ -1,0 +1,7 @@
+<div class="menu-item">
+	<a href="__url__"><span class="arrow-right"></span></a>
+	<div class="menu-item-text">
+		<div class="menu-item-title"><a href="__url__">__title__</a></div>
+		<div class="menu-item-description">__description__</div>
+	</div>
+</div>

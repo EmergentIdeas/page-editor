@@ -1,0 +1,32 @@
+<form method="post" action="__editableSubmitAction__">
+	<div id="page-properties">
+		<a href="#" id="show-page-properties">Edit</a>
+		<button class="page-properties-save" type="submit" disabled="disabled">Save</button>
+		<div class="page-properties-inner" >
+			<div class="page-properties-section" >
+				<div class="control-group">
+					<label class="control-label" for="editablePageTitle">Title:</label>
+					<div class="controls">
+						<input type="text" id="editablePageTitle" placeholder="The page title" name="editablePageTitle">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="editablePageKeywords">Keywords:</label>
+					<div class="controls">
+						<input type="text" id="editablePageKeywords" placeholder="The page keywords" name="editablePageKeywords">
+					</div>
+				</div>
+			</div>
+			<div class="page-properties-section" >
+				<div class="control-group">
+					<label class="control-label" for="editablePageDescription">Description:</label>
+					<div class="controls">
+						<textarea id="editablePageDescription" name="editablePageDescription" ></textarea><br/>
+					</div>
+				</div>
+			</div>		
+			__editableSectionNames::page-editor/editableSectionInputs__
+		</div>
+	</div>
+</form>
+		

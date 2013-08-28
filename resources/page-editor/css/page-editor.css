@@ -1,0 +1,129 @@
+.delete-file-form {
+	margin: 0px;
+	display: inline;
+}
+
+.view-file-entry .folder, .view-file-entry .file {
+	background-image: url('/page-editor/img/glyphicons-halflings.png');
+	overflow: hidden;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.view-file-entry .folder {
+	background-position: -380px -120px;
+}
+
+.view-file-entry .file {
+	background-position: -20px -24px;
+}
+
+.delete-file-form button, .delete-file-form button:active {
+	background-image: url('/page-editor/img/glyphicons-halflings.png');
+	overflow: hidden;
+	background-position: -311px 0px;
+	height: 1.5em;
+}
+
+.page-editor-view-tile {
+	display: inline-block;
+	width: 300px;
+	height: 300px;
+	margin: 15px;
+	cursor: pointer;
+	vertical-align: top;
+	text-align: center;
+	overflow: hidden;
+}
+
+.page-editor-view-image-container {
+	position: relative;
+}
+
+.page-editor-view-tile img {
+	max-height: 100%;
+	max-width: 100%;
+	width: auto;
+}
+
+.edit-content-inline-show-is-editable:not(.cke_focus):hover {
+	box-shadow: 2px 2px 1px #888888;
+	position: relative;
+	opacity:0.4;
+	filter:alpha(opacity=40); /* For IE8 and earlier */
+}
+
+.edit-content-inline-show-is-editable:not(.cke_focus):hover:after {
+	content: 'click to edit';
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+	padding: .25em;
+	background-color: white;
+	color: black;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	border-radius: 3px;
+	opacity:1;
+	filter:alpha(opacity=100); /* For IE8 and earlier */
+}
+
+#page-properties {
+	background-color: black;
+	color: white;
+	padding: .5em;
+}
+
+
+#show-page-properties, #show-page-properties:VISITED {
+	color: #3ecfd4;
+}
+
+#page-properties .page-properties-inner {
+	overflow: hidden;
+	display: none
+}
+
+.page-properties-save {
+	float: right;
+	
+}
+
+.page-properties-section {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 1.5em;
+}
+
+.page-properties-section input {
+	width: 30em;
+}
+
+.page-properties-section textarea {
+	width: 30em;
+	height: 4.7em;
+}
+
+.arrow-right {
+	width: 0; 
+	height: 0; 
+	border-top: 20px solid transparent;
+	border-bottom: 20px solid transparent;
+	border-left: 30px solid #444444;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.menu-item {
+	margin-bottom: 2em;
+}
+.menu-item-text {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: .7em;
+}
+
+.menu-item-title {
+	font-weight: bold;
+}

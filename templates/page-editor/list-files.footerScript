@@ -1,0 +1,14 @@
+$(function() {
+	$("#file-uploader").fineUploader({
+        debug: true,
+        request: {
+            endpoint: '__webAppContextRoot__/files/upload/__currentPath__',
+            inputName: 'contents',
+            filenameParam: 'filename'
+        }
+    }).on("complete", function(id, name, responseJSON, maybeXhr) {
+    	if(maybeXhr.moreHTML) {
+    		$('#file-entries').append(maybeXhr.moreHTML);
+    	}
+    });
+});

@@ -1,0 +1,39 @@
+<ivy-module version="2.0">
+	<!-- 
+		Below is a basic template to set up the dependencies and publication targets. You must change 
+		the following strings:
+		
+		change-me-to-organization-name
+		change-me-to-project-name
+		
+		Change them to your organization name and the name of this plugin
+	 -->
+    <info organisation="com.emergentideas" module="page-editor"/>
+    <configurations defaultconfmapping="build->*;deployment->default;test->default">
+    	<conf name="build" />
+    	<conf name="deployment" />
+    	<conf name="appdep" />
+    	<conf name="test" />
+    	<conf name="sources" />
+    	<conf name="empty" />
+    </configurations>
+    <publications>
+    	<artifact name="page-editor" type="jar" conf="appdep" />
+    	<artifact name="page-editor-sources" type="source" ext="jar" conf="sources"/>
+    </publications>
+    <dependencies>
+    	<dependency org="com.emergentideas" name="webhandle" rev="[1.0.0.9,)" conf="build" />
+    	
+    	<!-- needs to be included in the runtime environment to save new page copies -->
+    	<dependency org="org.jsoup" name="jsoup" rev="1.7.2" conf="appdep->default" />
+    	<!-- needed to be able to map the files as a webdav share -->
+    	<dependency org="net.sf.webdav-servlet" name="webdav-servlet" rev="2.0" conf="appdep->default" />
+    	
+    	
+    	
+    	<!-- For testing code -->
+		<dependency org="org.mockito" name="mockito-all" rev="1.9.5-rc1" conf="test"/>
+		<dependency org="junit" name="junit" rev="4.10" conf="test" />
+    	
+    </dependencies>
+</ivy-module>

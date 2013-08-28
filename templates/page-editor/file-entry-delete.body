@@ -1,0 +1,3 @@
+	<form class="delete-file-form" action="/files/delete__viewPath__" method="post">
+		<button class="btn-link" type="submit" onclick="return confirm(&quot;Delete?&quot;)">&nbsp;</button>
+	</form> 

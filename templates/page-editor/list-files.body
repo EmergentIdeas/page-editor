@@ -1,0 +1,18 @@
+<h1>Contents of: __currentPath__</h1>
+__::messages__
+
+<div id="file-entries">
+__resources::page-editor/file-entry__
+</div>
+
+<br/>
+<div id="file-uploader">
+</div>
+<br/>
+<noscript>
+	<form method="post" action="/files/upload/__currentPath__">
+		<input type="file" name="contents" />
+		<br/>
+		<button>Upload</button>
+	</form>
+</noscript>

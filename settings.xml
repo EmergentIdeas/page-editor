@@ -1,0 +1,42 @@
+<ivysettings>
+	<include url="${ivy.default.settings.dir}/ivysettings-public.xml" />
+	<include url="${ivy.default.settings.dir}/ivysettings-shared.xml" />
+	<include url="${ivy.default.settings.dir}/ivysettings-local.xml" />
+	<include url="${ivy.default.settings.dir}/ivysettings-main-chain.xml" />
+	<include url="${ivy.default.settings.dir}/ivysettings-default-chain.xml" />
+
+	<!-- 
+		These settings are to enable ivy to find packages in the public repository, in the Emergent Ideas publicly 
+		available but proprietarly hosted repository, and a local on disk repository which will hold new plugins.
+		
+		If you'd like to create your own proprietary repository, it's pretty easy. Just create a url resolver as shown
+		below, have a server some place hosting the files, and make sure that the request for a directory returns an
+		index that looks more or less like Apache's directory index. In the past, I've referenced github directly in the
+		url which sort of works but will not allow you to specify a range of acceptable versions since github doesn't have
+		a compatible directory listing.
+		
+		FOR YOU TO DO: Change "/data/repositories/ivyrepo/release" to some directory that exists on your local system. 
+	-->
+
+
+	<settings defaultResolver="composite-chain" />
+	
+	
+	<resolvers>
+		<filesystem name="local-resolver">
+			<ivy pattern="/data/repositories/ivyrepo/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+			<artifact pattern="/data/repositories/ivyrepo/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+		</filesystem>
+		<url name="com.emergentideas.public" >
+			<ivy pattern="http://ivyrepo.emergentideas.com/ivyrepo/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+			<artifact pattern="http://ivyrepo.emergentideas.com/ivyrepo/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+		</url>
+		
+		<chain name="composite-chain">
+			<resolver ref="local-resolver" />
+			<resolver ref="com.emergentideas.public" />
+			<reslover ref="public" />
+			<ibiblio name="ibiblio" m2compatible="true" />
+		</chain>
+	</resolvers>
+</ivysettings>

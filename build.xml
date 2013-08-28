@@ -1,0 +1,145 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="page-editor" default="dist" basedir=".">
+	<!-- 
+	
+		Change the follow strings to be specific to your project:
+		
+		change/me/to/your/project/package/name
+		change-me-to-organization-name
+		change-me-to-project-name
+		YOUR DESCRIPTION HERE
+		
+		
+		Each time you want to publish a new version, you should run:
+		
+		ant increment
+		
+		This will move the version number used in publishing one number up.
+	-->
+	
+	
+	<description>
+       -- Edits Pages in the Webhandle Framework --
+    </description>
+	
+	<!-- set global properties for this build -->
+	
+	<!-- locations containing files for this plugin -->
+	
+	<!-- Java source -->
+	<property name="src" location="src"/>
+	<!-- Templates that define the UI. I recommend creating a directory in this directory so that your files are project qualified-->
+	<property name="templates" location="templates"/>
+	<!-- Images, Javascript, and CSS. I recommend creating a directory in this directory so that your files are project qualified -->
+	<property name="resources" location="resources"/>
+	<!-- Configuration files which can be included by the users of the plugin to easily configure this plugin for their use. No need to qualify -->
+	<property name="configuration" location="configuration"/>
+	<!-- Jars that are not in an ivy repo needed to build the plugin -->
+	<property name="lib" location="lib"/>
+	
+	
+	<!-- locations for doing the work of building the plugin -->
+	<property name="dist"  location="dist"/>
+	<property name="artifacts" location="artifacts" />
+	
+	
+	<!-- properties that describe the current plugin. CHANGE THESE -->
+	<property name="app.package.root" value="com/emergentideas/page/editor" />
+	<!-- notice the spelling of the property name here as is used by ivy -->
+	<property name="organisation" value="com.emergentideas" />
+	
+	
+	<ivy:settings file="settings.xml" />
+
+	<!-- increment the version number in preparation of publishing a new version of the plugin -->
+	<target name="increment">
+		<propertyfile file="buildNumber.properties">
+			<entry key="build.number" type="int" operation="+" default="0" />
+		</propertyfile>
+		<property file="buildNumber.properties" />
+	</target>
+
+	<!-- deletes all previously compiled files -->
+	<target name="clean" description="clean up" >
+		<delete dir="${dist}"/>
+		<delete dir="${artifacts}"/>
+	</target>
+	
+	<!-- deletes this module from the cache so that subsequent publications of the same version will be picked up -->
+	<target name="delcache">
+		<ivy:cachepath pathid="ivy.cachepath.dne" conf="empty"/>
+		<echo message="deleting cache dir: ${ivy.cache.dir}/${organisation}/${ant.project.name}"></echo>
+	  	<delete dir="${ivy.cache.dir}/${organisation}/${ant.project.name}" />
+	</target>
+
+	
+	<!-- creates all of the required directories -->
+	<target name="init">
+		<property file="buildNumber.properties" />
+		<mkdir dir="${templates}" />
+		<mkdir dir="${resources}" />
+		<mkdir dir="${configuration}" />
+		<mkdir dir="${lib}" />
+		<mkdir dir="${dist}" />
+		<mkdir dir="${artifacts}" />
+	</target>
+
+	<!-- Compiles all source and moves all resources, templates, and configuration into the compiled classes directory -->
+	<target name="compile" depends="clean,init" description="compile the source" >
+		
+		<ivy:cachepath pathid="ivy.cachepath.dep" conf="appdep"/>
+		<ivy:cachepath pathid="ivy.cachepath.build" conf="build"/>
+		
+		<!-- use the ivy dependencies as well as the jars in the ${lib} directory -->
+		<path id="ivy.deps">
+			<path refid="ivy.cachepath.dep" />
+			<path refid="ivy.cachepath.build" />
+			<fileset dir="${lib}" >
+				<include name="*.jar"/>
+			</fileset>
+		</path>
+		
+		<!-- Compile the java code from ${src} into ${dist} -->
+		<javac nowarn="on" srcdir="${src}" destdir="${dist}" target="1.6" source="1.6" debug="true" debuglevel="lines,vars,source">
+			<classpath refid="ivy.deps" />
+		</javac>
+
+		<!-- copy properties and other non-java files (like .properties) from the src directory -->
+		<copy todir="${dist}">
+			<fileset dir="${src}" >
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+		
+		<!-- Copies the templates to a place in compiled classes tree -->
+		<copy todir="${dist}/${app.package.root}/templates">
+			<fileset dir="${templates}" >
+			</fileset>
+		</copy>
+		
+		<!-- Copies the resources to a place in compiled classes tree -->
+		<copy todir="${dist}/${app.package.root}/resources">
+			<fileset dir="${resources}" >
+			</fileset>
+		</copy>
+		
+		<!-- Copies the configuration files to a place in compiled classes tree -->
+		<copy todir="${dist}/${app.package.root}/configuration">
+			<fileset dir="${configuration}" >
+			</fileset>
+		</copy>
+	</target>
+	
+	<!-- builds a jar for compiled material and the sources both -->
+	<target name="dist" depends="compile">
+		<jar jarfile="${artifacts}/${organisation}-${ant.project.name}.jar" basedir="${dist}"/>
+		<zip destfile="${artifacts}/${organisation}-${ant.project.name}-sources.jar" basedir="${src}" />
+	</target>
+	
+	<!-- publishes the jars to the local repo so that they can be commited to git, moved to a server, etc. -->
+	<!-- If you're beyond the 1.0.0.x stage, you can change that version number here -->
+	<target name="pub" depends="delcache,dist" >
+		<ivy:publish resolver="local-resolver" pubrevision="1.0.0.${build.number}" update="true" overwrite="true" organisation="${organisation}">
+			<artifacts pattern="${artifacts}/[organisation]-[artifact].[ext]" />
+		</ivy:publish>
+	</target>
+</project>

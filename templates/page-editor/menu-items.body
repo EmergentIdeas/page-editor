@@ -1,0 +1,5 @@
+<h1>Main Menu</h1>
+
+<p>Choose an option below</p>
+<br/>
+__menuItems::page-editor/menu-item__

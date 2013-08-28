@@ -1,0 +1,8 @@
+<div class="page-editor-view-tile page-editor-view-image" data-browse-url="__viewPath__">
+	__name__
+	<br/>
+	<br/>
+	<div class="page-editor-view-image-container">
+		<img src="__largeTileImage__" />
+	</div>
+</div>
