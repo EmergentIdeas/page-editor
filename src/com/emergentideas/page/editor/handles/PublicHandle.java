@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.emergentideas.logging.Logger;
 import com.emergentideas.logging.SystemOutLogger;
 import com.emergentideas.webhandle.handlers.Handle;
+import com.emergentideas.webhandle.output.NoResponse;
 
 public class PublicHandle {
 	
@@ -14,13 +15,14 @@ public class PublicHandle {
 	
 	
 	@Handle({"", "/"})
-	public void index(HttpServletResponse response, HttpServletRequest request) {
+	public Object index(HttpServletResponse response, HttpServletRequest request) {
 		try {
 			request.getRequestDispatcher(forwardLocation).forward(request, response);
 		}
 		catch(Exception e) {
 			log.error("Could not forward to index.", e);
 		}
+		return new NoResponse();
 	}
 
 
