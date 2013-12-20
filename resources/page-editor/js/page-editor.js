@@ -1,5 +1,7 @@
 CKEDITOR.disableAutoInline = true;
 CKEDITOR.config.extraPlugins = 'sourcedialog';
+CKEDITOR.config.allowedContent = true;
+CKEDITOR.config.disableNativeSpellChecker = false;
 pageEditingEnabled = false;
 $(function() {
 	$('.page-properties-inner input').on('keyup keypress blur change', function() {
