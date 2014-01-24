@@ -1,5 +1,5 @@
 CKEDITOR.disableAutoInline = true;
-CKEDITOR.config.extraPlugins = 'sourcedialog';
+CKEDITOR.config.extraPlugins = 'sourcedialog,justify,font';
 CKEDITOR.config.allowedContent = true;
 CKEDITOR.config.disableNativeSpellChecker = false;
 pageEditingEnabled = false;
