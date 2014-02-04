@@ -1,10 +1,13 @@
 package com.emergentideas.page.editor.data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
@@ -35,6 +38,14 @@ public class Item {
 	
 	@Lob
 	protected String content;
+	
+	@ManyToMany
+	protected List<Category> categories = new ArrayList<Category>();
+	
+	protected ItemType type = ItemType.POST;
+	
+	protected PubStatus status = PubStatus.DRAFT;
+	
 
 	public Integer getId() {
 		return id;
@@ -90,6 +101,30 @@ public class Item {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
+	public ItemType getType() {
+		return type;
+	}
+
+	public void setType(ItemType type) {
+		this.type = type;
+	}
+
+	public PubStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(PubStatus status) {
+		this.status = status;
 	}
 	
 

@@ -1,0 +1,10 @@
+<div class="post-item">
+	<h1 class="item-title">__title__</h1>
+	<div class="item-pub-info">
+		__author::page-editor-blog/author-section__
+		<span class="pub-date">on __pubDate::page-editor/human-date__</span>
+	</div>
+	<div class="item-content">
+		__content::page-editor/no-escape__
+	</div>
+</div>

@@ -13,14 +13,6 @@ public class SiteSet {
 	
 	public List<Item> items = new ArrayList<Item>();
 
-	public List<Author> getAuthors() {
-		return authors;
-	}
-
-	public void setAuthors(List<Author> authors) {
-		this.authors = authors;
-	}
-	
 	public Author getAuthorByLogin(String loginName) {
 		for(Author author : authors) {
 			if(loginName.equals(author.getLoginName())) {
@@ -31,16 +23,6 @@ public class SiteSet {
 		return null;
 	}
 	
-	
-
-	public List<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
-
 	public Category getCategory(String slug, CategoryType type) {
 		for(Category category : categories) {
 			if(slug.equals(category.getSlug()) && (type == null || type.equals(category.getType()))) {
@@ -49,6 +31,32 @@ public class SiteSet {
 		}
 		
 		return null;
+	}
+	
+	public Item getItemBySlug(String slug) {
+		for(Item item : items) {
+			if(slug.equals(item.getSlug())) {
+				return item;
+			}
+		}
+		
+		return null;
+	}
+	
+	public List<Author> getAuthors() {
+		return authors;
+	}
+
+	public void setAuthors(List<Author> authors) {
+		this.authors = authors;
+	}
+	
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 	
 	public List<Item> getItems() {

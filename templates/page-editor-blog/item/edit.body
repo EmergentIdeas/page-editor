@@ -1,0 +1,7 @@
+<h1>Edit CAD Part</h1>
+
+<form action="/post/__id__" method="post" class="form-horizontal" >
+	__::page-editor-blog/item-fields__
+	<br/>
+	<button type="submit">Save</button>
+</form>

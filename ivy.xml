@@ -22,7 +22,7 @@
     	<artifact name="page-editor-sources" type="source" ext="jar" conf="sources"/>
     </publications>
     <dependencies>
-    	<dependency org="com.emergentideas" name="webhandle" rev="[1.0.0.9,)" conf="build" />
+    	<dependency org="com.emergentideas" name="webhandle" rev="[1.0.0.18,)" conf="build" />
     	
     	<!-- needs to be included in the runtime environment to save new page copies -->
     	<dependency org="org.jsoup" name="jsoup" rev="1.7.2" conf="appdep->default" />
@@ -30,6 +30,7 @@
     	<dependency org="net.sf.webdav-servlet" name="webdav-servlet" rev="2.0" conf="appdep->default" />
     	
     	
+    	<dependency org="com.emergentideas" name="crud_tools" rev="[1.0.0.3,)" conf="appdep" />
     	
     	<!-- For testing code -->
 		<dependency org="org.mockito" name="mockito-all" rev="1.9.5-rc1" conf="test"/>
