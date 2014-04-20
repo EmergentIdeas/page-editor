@@ -108,10 +108,20 @@ public class WordpressFeedImporter {
 			String authorShortName = getElementContent(itemElement, "dc:creator");
 			Author author = getAuthor(site, authorShortName);
 			item.setAuthor(author);
+			
+			transformContent(item);
 		}
 		
 		
 		return site;
+	}
+	
+	protected void transformContent(Item item) {
+		String s = item.getContent();
+		if(StringUtils.isNotBlank(s)) {
+			s = s.replace("\n\n", "\n<br/><br/>\n");
+			item.setContent(s);
+		}
 	}
 	
 	protected void addPostCategoriesToPostAndSite(Element itemElement, SiteSet site, Item item) {

@@ -1,9 +1,11 @@
 package com.emergentideas.page.editor.data;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class Category {
 	
 	public enum CategoryType { CATEGORY, TAG }

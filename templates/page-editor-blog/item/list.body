@@ -1,2 +1,7 @@
 <h1>All Posts</h1>
 __table::dataTables/table__
+
+<br/>
+<br/>
+<a href="/post/upload-wordpress-file">Upload Wordpress Export</a>
+<br/>

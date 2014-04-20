@@ -3,5 +3,5 @@
 <form action="/post/create" method="post" class="form-horizontal" >
 	__::page-editor-blog/item-fields__
 	<br/>
-	<button type="submit">Create</button>
+	<button class="btn btn-primary" type="submit">Create</button>
 </form>

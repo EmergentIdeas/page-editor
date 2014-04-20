@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import com.emergentideas.page.editor.data.Author;
 import com.emergentideas.page.editor.data.Category;
 import com.emergentideas.page.editor.data.Category.CategoryType;
+import com.emergentideas.page.editor.data.Item.ItemType;
+import com.emergentideas.page.editor.data.Item.PubStatus;
 import com.emergentideas.page.editor.data.Item;
 import com.emergentideas.page.editor.data.SiteSet;
 
@@ -16,6 +18,11 @@ public class PostService {
 	
 	@Resource
 	protected EntityManager entityManager;
+	
+	public List<Item> getAllPublishedPostsMostRecentFirst() {
+		return entityManager.createQuery("select i from Item i where type = :type and status = :status order by pubDate desc")
+		.setParameter("type", ItemType.POST).setParameter("status", PubStatus.PUBLISH).getResultList();
+	}
 	
 	public Author getAuthorByLoginName(String loginName) {
 		List<Author> l = entityManager.createQuery("select a from Author a where loginName = :loginName").setParameter("loginName", loginName).getResultList();
