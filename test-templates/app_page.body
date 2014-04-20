@@ -1,0 +1,4 @@
+__::includes__
+<div class="container">
+	__::$contentArea__
+</div>

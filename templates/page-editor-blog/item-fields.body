@@ -1,12 +1,50 @@
+<div class="row">
+	<div class="col-sm-6">
+		<div class="control-group">
+			<label class="control-label" for="title">Title</label>
+			<div class="controls">
+				<input class="form-control slug-source" type="text" id="title" name="title" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="slug">Slug (a short name for URLs)</label>
+			<div class="controls">
+				<input class="form-control" type="text" id="slug" name="slug" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="status">Status</label>
+			<div class="controls">
+				<select class="form-control" id="status" name="status">
+					<option value="DRAFT">draft</option>
+					<option value="PUBLISH">published</option>
+				</select>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="pubDate">Published date</label>
+			<div class="controls">
+				<input class="form-control add-picker-if-needed" type="datetime-local" id="pubDate" name="pubDate" />
+			</div>
+		</div>
+		
+	</div>
+	<div class="col-sm-6">
+		<div class="control-group">
+			<label class="control-label" for="description">Description</label>
+			<div class="controls">
+				<textarea class="form-control" id="description" name="description" rows="6"></textarea>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+
 <div class="control-group">
 	<label class="control-label" for="content">Content</label>
 	<div class="controls">
-		<textarea id="content" name="content" ></textarea>
+		<textarea id="content" name="content" class="ckeditor"></textarea>
 	</div>
 </div>
-<div class="control-group">
-	<label class="control-label" for="description">Description</label>
-	<div class="controls">
-		<textarea id="description" name="description" ></textarea>
-	</div>
-</div>
+

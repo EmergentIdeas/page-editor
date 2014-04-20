@@ -2,3 +2,8 @@ bin
 dist
 artifacts
 *~
+db
+WEB-INF
+ivylibs
+jetty
+testAppBin

@@ -3,6 +3,10 @@ CKEDITOR.config.extraPlugins = 'sourcedialog,justify,font';
 CKEDITOR.config.allowedContent = true;
 CKEDITOR.config.disableNativeSpellChecker = false;
 pageEditingEnabled = false;
+CKEDITOR.config.filebrowserBrowseUrl = '/files/browse/type/all';
+CKEDITOR.config.filebrowserImageBrowseUrl = '/files/browse/type/image';
+CKEDITOR.config.filebrowserUploadUrl = '/files/upload-file';
+
 $(function() {
 	$('.page-properties-inner input').on('keyup keypress blur change', function() {
 		enablePageSave();
@@ -48,12 +52,26 @@ $(function() {
 		$('.edit-content-inline').addClass('edit-content-inline-show-is-editable');
 		return false;
 	});
+	
+	$('.slug-source').on('change', function(event) {
+		var $slug = $('input[name="slug"]');
+		if(!$slug.val() || $slug().val() === '') {
+			$slug.val(transformToSlug($(this).val()));
+		}
+	});
+	
+	
 });
 
 function enablePageSave() {
 	$('.page-properties-save').removeAttr('disabled');	
 }
 
+function transformToSlug(title) {
+	title = title.toLowerCase();
+	title = title.replace(/\s+/g, '-');
+	return title;
+}
 
 
 function sdbmCode(str){
