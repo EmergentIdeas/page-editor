@@ -40,6 +40,17 @@ public class PostService {
 		.setParameter("type", ItemType.POST).getResultList();
 	}
 	
+	public Item getPostBySlug(String slug) {
+		Query q = entityManager.createQuery("select i from Item i where type = :type and status = :status and slug = :slug order by pubDate desc")
+		.setParameter("type", ItemType.POST).setParameter("status", PubStatus.PUBLISH).setParameter("slug", slug);
+		
+		List<Item> l = q.getResultList();
+		if(l.size() == 0) {
+			return null;
+		}
+		return l.get(0);
+	}
+	
 	public boolean hasLayouts() {
 		return getLayouts().size() > 0;
 	}

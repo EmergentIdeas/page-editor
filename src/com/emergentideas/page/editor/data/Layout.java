@@ -22,6 +22,10 @@ public class Layout {
 	@Column(length = 1000)
 	protected String templateName;
 
+	@Lob
+	@Column(length = 1000)
+	protected String previewTemplateName;
+
 	public Integer getId() {
 		return id;
 	}
@@ -44,6 +48,14 @@ public class Layout {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getPreviewTemplateName() {
+		return previewTemplateName;
+	}
+
+	public void setPreviewTemplateName(String previewTemplateName) {
+		this.previewTemplateName = previewTemplateName;
 	}
 	
 	

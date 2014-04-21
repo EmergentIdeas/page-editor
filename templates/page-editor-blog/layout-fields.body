@@ -10,3 +10,9 @@
 		<input class="form-control" type="text" id="templateName" name="templateName" />
 	</div>
 </div>
+<div class="control-group">
+	<label class="control-label" for="previewTemplateName">Preview template name</label>
+	<div class="controls">
+		<input class="form-control" type="text" id="previewTemplateName" name="previewTemplateName" />
+	</div>
+</div>

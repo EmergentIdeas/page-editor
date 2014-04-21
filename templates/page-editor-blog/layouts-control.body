@@ -1,7 +1,7 @@
 		<div class="control-group">
 			<label class="control-label" for="layout">Layout</label>
 			<div class="controls">
-				<select class="form-control" id="layout" name="layout">
+				<select class="form-control" id="layout" name="layoutId">
 					__layouts::page-editor-blog/layout-option__
 				</select>
 			</div>

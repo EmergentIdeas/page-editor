@@ -53,6 +53,9 @@ public class Item {
 	
 	protected PubStatus status = PubStatus.DRAFT;
 	
+	@ManyToOne
+	protected Layout layout;
+	
 	@OneToMany(cascade = {CascadeType.ALL})
 	protected List<Attachment> attachments = new ArrayList<Attachment>();
 
@@ -142,6 +145,14 @@ public class Item {
 
 	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
+	}
+
+	public Layout getLayout() {
+		return layout;
+	}
+
+	public void setLayout(Layout layout) {
+		this.layout = layout;
 	}
 	
 

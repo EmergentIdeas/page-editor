@@ -81,22 +81,24 @@ public class PostsHandle extends CRUDHandle<Item> {
 	@Handle(value = "/create", method = HttpMethod.POST)
 	@Template
 	@Wrap("app_page")
-	public Object createPost(InvocationContext context, @NotNull @Inject Item focus, Integer layout,
+	public Object createPost(InvocationContext context, @NotNull @Inject Item focus, Integer layoutId,
 			FileItem file1, FileItem file2, FileItem file3, FileItem file4, FileItem file5, FileItem file6, FileItem file7, 
 			Location location, RequestMessages messages) throws IOException {
 		addAttachements(location, focus, new FileItem[] {file1, file2, file3, file4, file5, file6, file7});
 		addPubDateIfNeeded(focus);
+		focus.setLayout(postService.getLayout(layoutId));
 		return super.createPost(context, focus, location, messages);
 	}
 
 	@Handle(value = "/{id:\\d+}", method = HttpMethod.POST)
 	@Template
 	@Wrap("app_page")
-	public Object editPost(InvocationContext context, User user, @Db("id") @Inject Item focus, Integer layout,
+	public Object editPost(InvocationContext context, User user, @Db("id") @Inject Item focus, Integer layoutId,
 			FileItem file1, FileItem file2, FileItem file3, FileItem file4, FileItem file5, FileItem file6, FileItem file7, 
 			Location location, RequestMessages messages) throws IOException {
 		addAttachements(location, focus, new FileItem[] {file1, file2, file3, file4, file5, file6, file7});
 		addPubDateIfNeeded(focus);
+		focus.setLayout(postService.getLayout(layoutId));
 		return super.editPost(context, user, focus, location, messages);
 	}
 
@@ -109,6 +111,10 @@ public class PostsHandle extends CRUDHandle<Item> {
 		List<Layout> l = postService.getLayouts();
 		if(l.size() > 0) {
 			location.put("layouts", l);
+		}
+		
+		if(focus != null && focus.getLayout() != null) {
+			location.put("layoutId", focus.getLayout().getId());
 		}
 	}
 
