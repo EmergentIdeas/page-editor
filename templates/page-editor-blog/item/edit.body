@@ -1,6 +1,6 @@
 <h1>Edit Post</h1>
 
-<form action="/post/__id__" method="post" class="form-horizontal" >
+<form action="/post/__id__" method="post" class="blog-post-form" enctype="multipart/form-data">
 	__::page-editor-blog/item-fields__
 	<br/>
 	<button class="btn btn-primary" type="submit">Save</button>

@@ -1,0 +1,7 @@
+<h1>Create Author</h1>
+
+<form action="/author/create" method="post" >
+	__::page-editor-blog/author-fields__
+	<br/>
+	<button class="btn btn-primary" type="submit">Create</button>
+</form>

@@ -5,13 +5,14 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-
+import javax.persistence.OneToMany;
 
 @Entity
 public class Item {
@@ -28,17 +29,21 @@ public class Item {
 	protected Author author;
 	
 	@Lob
+	@Column(length = 1000)
 	protected String title;
 	
 	@Lob
+	@Column(length = 1000)
 	protected String slug;
 	
 	protected Date pubDate;
 	
 	@Lob
+	@Column(length = 2000)
 	protected String description;
 	
 	@Lob
+	@Column(length = 200000)
 	protected String content;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -48,6 +53,8 @@ public class Item {
 	
 	protected PubStatus status = PubStatus.DRAFT;
 	
+	@OneToMany(cascade = {CascadeType.ALL})
+	protected List<Attachment> attachments = new ArrayList<Attachment>();
 
 	public Integer getId() {
 		return id;
@@ -127,6 +134,14 @@ public class Item {
 
 	public void setStatus(PubStatus status) {
 		this.status = status;
+	}
+
+	public List<Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<Attachment> attachments) {
+		this.attachments = attachments;
 	}
 	
 

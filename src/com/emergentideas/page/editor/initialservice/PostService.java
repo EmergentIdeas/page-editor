@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import com.emergentideas.page.editor.data.Author;
 import com.emergentideas.page.editor.data.Category;
@@ -11,6 +12,7 @@ import com.emergentideas.page.editor.data.Category.CategoryType;
 import com.emergentideas.page.editor.data.Item.ItemType;
 import com.emergentideas.page.editor.data.Item.PubStatus;
 import com.emergentideas.page.editor.data.Item;
+import com.emergentideas.page.editor.data.Layout;
 import com.emergentideas.page.editor.data.SiteSet;
 
 @Resource
@@ -20,8 +22,48 @@ public class PostService {
 	protected EntityManager entityManager;
 	
 	public List<Item> getAllPublishedPostsMostRecentFirst() {
-		return entityManager.createQuery("select i from Item i where type = :type and status = :status order by pubDate desc")
-		.setParameter("type", ItemType.POST).setParameter("status", PubStatus.PUBLISH).getResultList();
+		return getLastXPublishedPostsMostRecentFirst(null);
+	}
+	
+	public List<Item> getLastXPublishedPostsMostRecentFirst(Integer numberOfPosts) {
+		Query q = entityManager.createQuery("select i from Item i where type = :type and status = :status order by pubDate desc")
+		.setParameter("type", ItemType.POST).setParameter("status", PubStatus.PUBLISH);
+		
+		if(numberOfPosts != null) {
+			q.setMaxResults(numberOfPosts);
+		}
+		return q.getResultList();
+	}
+	
+	public List<Item> getAllPostsMostRecentFirst() {
+		return entityManager.createQuery("select i from Item i where type = :type order by id desc")
+		.setParameter("type", ItemType.POST).getResultList();
+	}
+	
+	public boolean hasLayouts() {
+		return getLayouts().size() > 0;
+	}
+	
+	public List<Layout> getLayouts() {
+		return entityManager.createQuery("select l from Layout l").getResultList();
+	}
+	
+	/**
+	 * Returns an item identified by <code>id</code> or null if not found.
+	 */
+	public Item getItem(Integer id) {
+		return entityManager.find(Item.class, id);
+	}
+	
+	public Layout getLayout(Integer id) {
+		if(id == null) {
+			return null;
+		}
+		return entityManager.find(Layout.class, id);
+	}
+	
+	public void remove(Object o) {
+		entityManager.remove(o);
 	}
 	
 	public Author getAuthorByLoginName(String loginName) {

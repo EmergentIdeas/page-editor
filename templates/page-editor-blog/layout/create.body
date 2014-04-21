@@ -1,0 +1,7 @@
+<h1>Create Layout</h1>
+
+<form action="/layout/create" method="post" >
+	__::page-editor-blog/layout-fields__
+	<br/>
+	<button class="btn btn-primary" type="submit">Create</button>
+</form>

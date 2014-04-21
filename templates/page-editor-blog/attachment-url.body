@@ -1,0 +1,3 @@
+<div class="attachment-item" data-delete-url="/post/__item/id__/delete-attachment/__id__">
+<a href="#" class="delete">&times;</a> <a href="__url__">__url__</a> 
+</div>

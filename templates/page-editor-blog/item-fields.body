@@ -27,13 +27,25 @@
 				<input class="form-control add-picker-if-needed" type="datetime-local" id="pubDate" name="pubDate" />
 			</div>
 		</div>
-		
+		__layouts??::page-editor-blog/layouts-control__
 	</div>
 	<div class="col-sm-6">
 		<div class="control-group">
 			<label class="control-label" for="description">Description</label>
 			<div class="controls">
-				<textarea class="form-control" id="description" name="description" rows="6"></textarea>
+				<textarea class="form-control" id="description" name="description" rows="4"></textarea>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" >Current attachments</label>
+			<div class="controls">
+				__attachments::page-editor-blog/attachment-url__
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" >New attachments</label>
+			<div class="controls">
+				<input type="file" class="form-control blog-item-attachment-file" name="file1" />
 			</div>
 		</div>
 	</div>
