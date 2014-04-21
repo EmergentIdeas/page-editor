@@ -1,6 +1,6 @@
 <form method="post" action="__editableSubmitAction__">
 	<div id="page-properties">
-		<a href="#" id="show-page-properties">Edit</a>
+		<a href="/menu">Menu</a> &nbsp;&nbsp;<a href="#" id="show-page-properties">Edit</a>
 		<button class="page-properties-save" type="submit" disabled="disabled">Save</button>
 		<div class="page-properties-inner" >
 			<div class="page-properties-section" >
