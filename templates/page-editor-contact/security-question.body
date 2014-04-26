@@ -1,0 +1,10 @@
+<div class="form-question">
+	<div class="row">
+		<label class="col-xs-2">five plus twenty *</label>
+		<input class="col-xs-9" maxlength="5" size="5" type="text" name="vrf" /> 
+	</div>
+	<div class="row">
+		<div class="small-message col-xs-offset-2">To help us keep spambots from submitting this form, please fill in the answer
+		to the above math question</div>
+	</div>
+</div>

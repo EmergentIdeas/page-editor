@@ -31,7 +31,8 @@
     	
     	
     	<dependency org="com.emergentideas" name="crud_tools" rev="[1.0.0.3,)" conf="appdep" />
-    	
+		<dependency org="com.emergentideas" name="entity-class-tools" rev="latest.integration" conf="appdep" />
+    		
     	<!-- For testing code -->
 		<dependency org="org.mockito" name="mockito-all" rev="1.9.5-rc1" conf="test"/>
 		<dependency org="junit" name="junit" rev="4.10" conf="test" />

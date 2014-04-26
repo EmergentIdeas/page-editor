@@ -23,6 +23,7 @@ import com.emergentideas.page.editor.data.Layout;
 import com.emergentideas.page.editor.data.SiteSet;
 import com.emergentideas.page.editor.helpers.PageEditorConstants;
 import com.emergentideas.page.editor.initialservice.PostService;
+import com.emergentideas.page.editor.service.PageEditorService;
 import com.emergentideas.page.editor.service.WordpressFeedImporter;
 import com.emergentideas.webhandle.Inject;
 import com.emergentideas.webhandle.InvocationContext;
@@ -49,6 +50,9 @@ public class PostsHandle extends CRUDHandle<Item> {
 	@Resource
 	protected PostService postService;
 
+	@Resource
+	protected PageEditorService pageEditorService;
+	
 	protected String sinkName = "staticResources";
 	protected String attachmentPrefix = "img/";
 
@@ -133,45 +137,10 @@ public class PostsHandle extends CRUDHandle<Item> {
 			if(file.getSize() == 0) {
 				continue;
 			}
-			focus.getAttachments().add(new Attachment(focus, writeNewAttachment(location, file)));
+			focus.getAttachments().add(new Attachment(focus, pageEditorService.writeNewAttachment(location, file, sinkName, attachmentPrefix)));
 		}
 	}
 
-	protected String writeNewAttachment(Location location, FileItem item) throws IOException {
-		StreamableResourceSink sink = findSink(location, sinkName);
-		String path = getRelativeFileName(getShortFileName(item));
-		sink.write(path, item.get());
-		
-		if(path.startsWith("/") == false) {
-			path = "/" + path;
-		}
-		
-		return path;
-	}
-	
-	protected String getShortFileName(FileItem item) {
-		String name = item.getName();
-		if(StringUtils.isBlank(name) || name.contains("..") || name.startsWith("~/")) {
-			name = "attachment" + System.currentTimeMillis() + ".jpg";
-		}
-		else {
-			name = name.replace("\\", "/");
-			int i = name.lastIndexOf('/');
-			if(i > -1) {
-				name = name.substring(i + 1);
-			}
-		}
-		
-		return name;
-	}
-
-	protected StreamableResourceSink findSink(Location location, String sinkName) {
-		return (StreamableResourceSink)new WebAppLocation(location).getServiceByName(sinkName);
-	}
-
-	protected String getRelativeFileName(String shortName) {
-		return attachmentPrefix + shortName;
-	}
 
 	@Override
 	public List<Item> findEntitiesToShow(InvocationContext context, User user,

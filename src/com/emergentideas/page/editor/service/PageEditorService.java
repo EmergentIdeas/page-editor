@@ -1,6 +1,7 @@
 package com.emergentideas.page.editor.service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -8,8 +9,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang.StringUtils;
+
 import com.emergentideas.page.editor.helpers.ResourceDisplayComparator;
 import com.emergentideas.page.editor.helpers.ResourceDisplayEntry;
+import com.emergentideas.webhandle.Location;
+import com.emergentideas.webhandle.WebAppLocation;
 import com.emergentideas.webhandle.files.Directory;
 import com.emergentideas.webhandle.files.NamedResource;
 import com.emergentideas.webhandle.files.StreamableResource;
@@ -126,6 +132,9 @@ public class PageEditorService {
 		}
 	}
 	
+	/**
+	 * Returns true if the filename indicates that it is an image
+	 */
 	public static boolean isImageFilename(String filename) {
 		filename = filename.toLowerCase();
 		if(
@@ -154,6 +163,80 @@ public class PageEditorService {
 		return result;
 	}
 	
+	/**
+	 * Writes a file to the named sink. This can be used by other handlers to write files to
+	 * disk and then associate them with their objects however they'd like
+	 */
+	public String writeNewAttachment(Location location, FileItem item, String sinkName, String relativePathPrefix) throws IOException {
+		StreamableResourceSink sink = findSink(location, sinkName);
+		String path = getRelativeFileName(relativePathPrefix, getShortFileName(item));
+		sink.write(path, item.get());
+		
+		if(path.startsWith("/") == false) {
+			path = "/" + path;
+		}
+		
+		return path;
+	}
+	
+	/**
+	 * Writes a file to the named sink. This can be used by other handlers to write files to
+	 * disk and then associate them with their objects however they'd like
+	 */
+	public String writeNewAttachment(Location location, String originalFileName, String sinkName, String relativePathPrefix, InputStream data) throws IOException {
+		StreamableResourceSink sink = findSink(location, sinkName);
+		String path = getRelativeFileName(relativePathPrefix, getLastSectionName(originalFileName));
+		sink.write(path, data);
+		
+		if(path.startsWith("/") == false) {
+			path = "/" + path;
+		}
+		
+		return path;
+	}
+	
+	/**
+	 * Creates a short file name for use with a {@link FileItem}. Checks for non-allowed path
+	 * segments like .. and will create a new timestamp based name if blank.
+	 */
+	public String getShortFileName(FileItem item) {
+		String name = item.getName();
+		if(StringUtils.isBlank(name)) {
+			name = createNewName();
+		}
+		
+		name = getLastSectionName(name);
+		
+		if(StringUtils.isBlank(name) || name.contains("..") || name.startsWith("~/")) {
+			name = createNewName();
+		}
+		
+		return name;
+	}
+	
+	/**
+	 * Creates a new timestamp based file name
+	 */
+	protected String createNewName() {
+		return "attachment" + System.currentTimeMillis() + ".jpg";
+	}
+
+	/**
+	 * Gets the sink by name
+	 */
+	public StreamableResourceSink findSink(Location location, String sinkName) {
+		return (StreamableResourceSink)new WebAppLocation(location).getServiceByName(sinkName);
+	}
+
+	/**
+	 * Prefixes a short name with a relative path.
+	 */
+	protected String getRelativeFileName(String relativePathPrefix, String shortName) {
+		if(relativePathPrefix.endsWith("/") == false) {
+			relativePathPrefix += "/";
+		}
+		return relativePathPrefix + shortName;
+	}
 	
 	public static String bookendWithSlash(String path) {
 		if(path.startsWith("/") == false) {
@@ -170,8 +253,6 @@ public class PageEditorService {
 	/**
 	 * Removes the last path portion (essentially returning the parent) including what would
 	 * be the trailing slash 
-	 * @param path
-	 * @return
 	 */
 	public static String chopLastSection(String path) {
 		path = transformSlashes(path);
@@ -187,6 +268,12 @@ public class PageEditorService {
 		return path.substring(0, index);
 	}
 	
+	/**
+	 * Returns the last non-blank section of a path. For example:
+	 * /hello/ -> hello
+	 * /hello/there -> there
+	 * /hello/there.jpg -> there.jpg
+	 */
 	public static String getLastSectionName(String path) {
 		path = transformSlashes(path);
 		
@@ -206,8 +293,6 @@ public class PageEditorService {
 	
 	/**
 	 * Transforms all back slashes to forward slashes
-	 * @param path
-	 * @return
 	 */
 	public static String transformSlashes(String path) {
 		if(path == null) {

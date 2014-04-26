@@ -1,0 +1,7 @@
+<h2>Contact Us</h2>
+__::messages__
+<form action="/contact-form" method="post" class="">
+	__::page-editor-contact/contact-fields__
+	__::page-editor-contact/security-question__
+	<button class="btn btn-primary">Submit</button>
+</form>
