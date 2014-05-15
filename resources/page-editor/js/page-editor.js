@@ -8,7 +8,7 @@ CKEDITOR.config.filebrowserImageBrowseUrl = '/files/browse/type/image';
 CKEDITOR.config.filebrowserUploadUrl = '/files/upload-file';
 
 $(function() {
-	$('.page-properties-inner input').on('keyup keypress blur change', function() {
+	$('.page-properties-inner input, .page-properties-inner textarea').on('keyup keypress blur change', function() {
 		enablePageSave();
 	});
 	
