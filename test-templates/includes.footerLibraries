@@ -1,2 +1,5 @@
 /js/jquery.min.js
 /page-editor/ckeditor/ckeditor.js
+/tripartite/tripartite.js
+/tripartite/jquery.binddata.js
+/page-editor/js/menuEditor.jquery.js

@@ -1,32 +1,40 @@
-<form method="post" action="__editableSubmitAction__">
-	<div id="page-properties">
-		<a href="/menu">Menu</a> &nbsp;&nbsp;<a href="#" id="show-page-properties">Edit</a>
-		<button class="page-properties-save" type="submit" disabled="disabled">Save</button>
-		<div class="page-properties-inner" >
-			<div class="page-properties-section" >
-				<div class="control-group">
-					<label class="control-label" for="editablePageTitle">Title:</label>
-					<div class="controls">
-						<input type="text" id="editablePageTitle" placeholder="The page title" name="editablePageTitle">
-					</div>
+<div id="page-properties">
+	<form method="post" action="__editableSubmitAction__">
+		<div id="page-properties-button-row">
+			<div class="container">
+				<div class="left-links">
+					<a href="#" id="show-page-properties"><img src="__vrsc__/page-editor/img/edit-icon-white.png"/></a>&nbsp;&nbsp;<a href="/menu">Menu</a>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="editablePageKeywords">Keywords:</label>
-					<div class="controls">
-						<input type="text" id="editablePageKeywords" placeholder="The page keywords" name="editablePageKeywords">
-					</div>
-				</div>
+				<button class="page-properties-save" type="submit" disabled="disabled">Save</button>
 			</div>
-			<div class="page-properties-section" >
-				<div class="control-group">
-					<label class="control-label" for="editablePageDescription">Description:</label>
-					<div class="controls">
-						<textarea id="editablePageDescription" name="editablePageDescription" ></textarea><br/>
+		</div>
+		<div class="page-properties-inner" >
+			<div class="container">
+				<div class="page-properties-section" >
+					<div class="control-group">
+						<label class="control-label" for="editablePageTitle">Title:</label>
+						<div class="controls">
+							<input type="text" id="editablePageTitle" placeholder="The page title" name="editablePageTitle">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="editablePageKeywords">Keywords:</label>
+						<div class="controls">
+							<input type="text" id="editablePageKeywords" placeholder="The page keywords" name="editablePageKeywords">
+						</div>
 					</div>
 				</div>
-			</div>		
-			__editableSectionNames::page-editor/editableSectionInputs__
+				<div class="page-properties-section" >
+					<div class="control-group">
+						<label class="control-label" for="editablePageDescription">Description:</label>
+						<div class="controls">
+							<textarea id="editablePageDescription" name="editablePageDescription" ></textarea><br/>
+						</div>
+					</div>
+				</div>		
+				__editableSectionNames::page-editor/editableSectionInputs__
+			</div>
 		</div>
-	</div>
-</form>
+	</form>
+</div>
 		

@@ -1,0 +1,27 @@
+__::includes__
+__::page-editor/menu-editor-includes__
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12">
+			<h1>Menu Editor Test</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="menu-tree" data-menu-data-prefix="/menu/test1">
+			<div class="tree-section col-sm-6">
+				<p>Click menu items to edit, drag items to rearrange, click the plus to add new items.</p>
+				<div class="menu-buttons">
+					<a href="#" class="add-menu-item" title="Add Menu Item">+</a>
+				</div>
+				<div class="the-tree">
+				 &nbsp;
+				</div>
+			</div>
+			<div class="details-section col-sm-6">
+				<div class="item-details">
+					&nbsp;
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
