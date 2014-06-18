@@ -132,3 +132,12 @@
 .menu-item-title {
 	font-weight: bold;
 }
+
+.page-editor-bottom-button {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.page-editor-bottom-button-block {
+	margin-top: 2em;
+}

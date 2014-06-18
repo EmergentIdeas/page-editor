@@ -25,6 +25,7 @@ import com.emergentideas.webhandle.assumptions.oak.RequestMessages;
 import com.emergentideas.webhandle.exceptions.CouldNotHandle;
 import com.emergentideas.webhandle.files.CompositeStreamableResourceSource;
 import com.emergentideas.webhandle.files.Directory;
+import com.emergentideas.webhandle.files.DirectoryManipulator;
 import com.emergentideas.webhandle.files.FileStreamableResource;
 import com.emergentideas.webhandle.files.Resource;
 import com.emergentideas.webhandle.files.StreamableResourceSink;
@@ -128,6 +129,38 @@ public class FilesHandle {
 		
 		return "page-editor/list-files";
 	}
+	
+	@GET
+	@Path("mkdir/{path:.*}")
+	@Template
+	@Wrap("app_page")
+	@RolesAllowed("page-editors")
+	public Object showMakeDirectory(Location location, String path) {
+		
+		location.put("parentDirectory", path);
+		return "page-editor/make-directory";
+	}
+	
+	@POST
+	@Path("mkdir/{path:.*}")
+	@Template
+	@Wrap("app_page")
+	@RolesAllowed("page-editors")
+	public Object showMakeDirectory(Location location, RequestMessages messages, String path, String directoryName) {
+		DirectoryManipulator sink = (DirectoryManipulator)findStaticSink(location);
+		
+		if(path.endsWith("/") == false) {
+			path += "/";
+		}
+		sink.makeDirectory(path + directoryName);
+
+		messages.getInfoMessages().add("Directory created");
+		String showPath = "/files/view/" + path;
+		showPath = showPath.replace("//", "/");
+		return new Show(showPath);
+	}
+
+
 	
 	@GET
 	@Path("browse/type/image")

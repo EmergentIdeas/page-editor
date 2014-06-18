@@ -5,14 +5,23 @@ __::messages__
 __resources::page-editor/file-entry__
 </div>
 
-<br/>
-<div id="file-uploader">
+
+<div class="page-editor-bottom-button-block"><div class="page-editor-bottom-button">
+		<a class="btn btn-default" href="/files/mkdir/__currentPath__">Make Directory</a>
+	</div>
 </div>
-<br/>
-<noscript>
-	<form method="post" action="/files/upload/__currentPath__">
-		<input type="file" name="contents" />
+
+<div class="page-editor-bottom-button-block">
+	<div>
+		<div id="file-uploader">
+		</div>
 		<br/>
-		<button>Upload</button>
-	</form>
-</noscript>
+		<noscript>
+			<form method="post" action="/files/upload/__currentPath__">
+				<input type="file" name="contents" />
+				<br/>
+				<button>Upload</button>
+			</form>
+		</noscript>
+	</div>
+</div>

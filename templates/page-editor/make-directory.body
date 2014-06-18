@@ -1,0 +1,13 @@
+<h1>Make Directory</h1>
+__::messages__
+
+<form method="post" action="/files/mkdir/__parentDirectory__">
+	<div class="control-group form-group">
+		<label class="control-label" for="directoryName">Directory name:</label>
+		<div class="controls">
+			<input class="form-control" type="text" id="directoryName" placeholder="The new directory name" name="directoryName">
+		</div>
+	</div>
+	<br/>
+	<button class="btn btn-primary" type="submit">Create</button>
+</form>
