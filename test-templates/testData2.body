@@ -1,0 +1,3 @@
+<div class="page-properties-section">
+<label for="data-item-1" >Data item 1: </label><br/><input type="text" name="template_data_one" id="data-item-1" />
+</div>
