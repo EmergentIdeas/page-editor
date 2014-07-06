@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +51,18 @@ public class PagesHandle {
 	 */
 	protected String roleToEdit = "page-editors";
 	
+	/**
+	 * Any request parameter prefixed with this string is assumed to be a key value pair for the template
+	 * data where the portion of the parameter name following the prefix is the key and the value of the
+	 * parameter is the data parameter.
+	 */
+	protected String dataParameterPrefix = "template_data_";
+	
+	
+	protected String defaultComplexPropertiesTemplateName = "page-editor/complex-page-properties";
+	
+	protected String complexPropertiesTemplateProperty = "complexPagePropertiesTemplate";
+	
 	@GET
 	@Path("/{page:.+}")
 	@Template
@@ -66,6 +80,15 @@ public class PagesHandle {
 					location.put("pageIsEditable", true);
 					location.put("editableSubmitAction", "/" + page);
 					location.put("editablePageTitle", getTitle(tt));
+					
+					Map<String, String> templateData = tt.getTemplateData();
+					if(templateData.containsKey(complexPropertiesTemplateProperty) == false) {
+						// If the page is going to be edited and doesn't specify a template to be used for
+						// the complex page editing tasks like included slideshow, etc. then add the default
+						// template name (which exists but may not have any content)
+						location.put(complexPropertiesTemplateProperty, defaultComplexPropertiesTemplateName);
+					}
+					
 					addMetaToLocation(location, tt);
 				}
 				
@@ -158,6 +181,7 @@ public class PagesHandle {
 					}
 				}
 				
+				saveTemplateDataSubmissions(request, tt, sink, page);
 				
 				// Change any of the body segments which have but submitted
 				String bodyText = tt.getSections().get("body");
@@ -188,6 +212,41 @@ public class PagesHandle {
 		
 		
 		return new CouldNotHandle() {};
+	}
+	
+	protected void saveTemplateDataSubmissions(HttpServletRequest request, TripartateTemplate tt, StreamableResourceSink sink, String page) 
+			throws IOException {
+		// Process any template data parameters
+		Map<String, String> parameters = request.getParameterMap();
+		Map<String, String> submittedData = new HashMap<String, String>();
+		for(String key : parameters.keySet()) {
+			if(key.startsWith(dataParameterPrefix)) {
+				String value = request.getParameter(key);
+				key = key.substring(dataParameterPrefix.length());
+				submittedData.put(key, value);
+			}
+		}
+		
+		if(submittedData.size() > 0) {
+			String filename = page + ".data";
+			Resource r = sink.get(filename);
+			if(r == null || r instanceof StreamableResource) {
+				Properties templateData = new Properties();
+				if(r != null) {
+					templateData.load(((StreamableResource)r).getContent());
+				}
+				
+				for(String key : submittedData.keySet()) {
+					templateData.put(key, submittedData.get(key));
+				}
+				
+				StringWriter sw = new StringWriter();
+				templateData.store(sw, null);
+				
+				sink.write(filename, sw.toString().getBytes(characterSet));
+			}
+		}
+		
 	}
 	
 	protected boolean isModifyable(String templateContent) {

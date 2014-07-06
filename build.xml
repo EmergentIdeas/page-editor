@@ -206,7 +206,8 @@
     </target>
 
     <target name="jetty" depends="prep,jetty-found,jetty-download" >
-            <ivy:retrieve pattern="${whlibs}/[artifact](-[classifier])-[revision].jar" type="jar" conf="build"/>
+        <ivy:retrieve pattern="${whlibs}/[artifact](-[classifier])-[revision].jar" type="jar" conf="build"/>
+        <ivy:retrieve pattern="${whlibs}/[artifact](-[classifier])-[revision].jar" type="bundle" conf="build"/>
             <copy file="web.xml" todir="${webinf}">
             </copy>
     </target>
