@@ -1,0 +1,54 @@
+$('.menu-tree').menuEditor();
+
+//$.get('/page-editor/templates/menu-editor.templates').done(function(data) {
+//	Tripartite.parseTemplateScript(data);
+//});
+//
+//function saveTree() {
+//	console.log('saving tree');
+//}
+//
+//$.get('/tree1.json').done(function(data) {
+//	$('.the-tree').tree(
+//		{ 
+//			data: JSON.parse(data),
+//			dragAndDrop: true
+//		}
+//	);
+//	$('.the-tree').on('tree.select', function(evt) {
+//		if(evt.node) {
+//			$('.item-details').html(menuItemEdit());
+//			var node = evt.node;
+//			$('.item-details').binddata({ id: node.id, itemLabel: node.name, itemUrl: node.itemUrl, customClasses: node.customClasses });
+//			console.log('clicked: ' + evt.node.name);
+//		}
+//	});
+//	
+//	$('.the-tree').on('tree.move', function(evt) {
+//		saveTree();
+//	});
+//	
+//	$('.item-details').on('click', '.save', function() {
+//		var $tree = $('.the-tree');
+//		var $form = $(this).closest('form');
+//		var node = $tree.tree('getNodeById', $form.find('[name=id]').val());
+//		$.each($form.serializeArray(), function() { node[this.name] = this.value });
+//		node.label = node.itemLabel;
+//		$tree.tree('updateNode', node, node.label);
+//		saveTree();
+//	});
+//});
+//
+//$('#add-menu-item').on('click', function() {
+//	var $tree = $('.the-tree');
+//	var selected = $tree.tree('getSelectedNode');
+//	var appended = $tree.tree('appendNode', {
+//		label: 'new item',
+//		id: 'n' + new Date().getTime()
+//	}, selected);
+//	if(selected) {
+//		$tree.tree('openNode', selected);
+//	}
+//	$tree.tree('scrollTo', appended);
+//	$tree.tree('selectNode', appended);
+//});
