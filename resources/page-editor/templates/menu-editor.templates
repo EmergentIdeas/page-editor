@@ -1,0 +1,27 @@
+##menuItemEdit##
+<div class="menu-item-edit">
+	<form action="#">
+		<input type="hidden" name="id" />
+		<div class="control-group form-group">
+			<label class="control-label" for="itemLabel">Item label</label>
+			<div class="controls">
+				<input class="form-control" type="text" id="itemLabel" name="itemLabel" />
+			</div>
+		</div>
+		<div class="control-group form-group">
+			<label class="control-label" for="itemUrl">Item URL</label>
+			<div class="controls">
+				<input class="form-control" type="text" id="itemUrl" name="itemUrl" value/>
+			</div>
+		</div>
+		<div class="control-group form-group">
+			<label class="control-label" for="customClasses">Custom classes</label>
+			<div class="controls">
+				<input class="form-control" type="text" id="customClasses" name="customClasses" />
+			</div>
+		</div>
+		<div class="buttons-row">
+			<button type="button" class="btn btn-primary save">Save</button>
+		</div>
+	</form>
+</div>	

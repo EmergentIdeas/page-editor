@@ -3,6 +3,11 @@
 	display: inline;
 }
 
+.view-file-entry, .view-file-entry .btn-link {
+	line-height: 24px;
+	vertical-align: middle;
+}
+
 .view-file-entry .folder, .view-file-entry .file {
 	background-image: url('/page-editor/img/glyphicons-halflings.png');
 	overflow: hidden;
@@ -75,39 +80,92 @@
 
 #page-properties {
 	background-color: black;
+	background-image: url('/page-editor/img/edit-background.png');
 	color: white;
-	padding: .5em;
 	z-index: 10;
 }
 
+#page-properties-button-row {
+	height: 30px;
+	position: relative;
+}
+
+#page-properties-button-row .container {
+	position: relative;
+	height: 100%;
+}
+
+#page-properties-button-row .left-links {
+	background-color: rgba(0, 0, 0, .6);
+	display: inline-block;
+	margin-left: -1000px;
+	padding-left: 1000px;
+	padding-right: 2em;
+	-moz-border-radius-bottomright: 15px;
+	-webkit-border-bottom-right-radius: 15px;
+	border-bottom-right-radius: 15px;
+	height: 100%;
+}
 
 #show-page-properties, #show-page-properties:VISITED {
 	color: #3ecfd4;
 }
 
+#show-page-properties img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#page-properties-button-row .left-links a {
+	line-height: 30px;
+	display: inline-block;
+	padding: 0 .25em 0 .25em;
+	height: 100%;
+	vertical-align: middle;
+}
+
 #page-properties .page-properties-inner {
 	overflow: hidden;
-	display: none
+	display: none;
+	padding-top: .5em;
+	padding-bottom: .5em;
 }
 
 .page-properties-save {
-	float: right;
-	color: black;
+	position: absolute;
+	background-color: #64c3ff;
+	color: white;
+	border: none;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.page-properties-save:disabled {
+	display: none;
 }
 
 .page-properties-section {
 	display: inline-block;
 	vertical-align: top;
-	margin-right: 1.5em;
+	width: 48%;
+}
+
+.page-properties-section:FIRST-CHILD {
+	margin-right: 3%;
 }
 
 .page-properties-section input {
-	width: 30em;
+	width: 100%;
+	color: black;
 }
 
 .page-properties-section textarea {
-	width: 30em;
-	height: 4.7em;
+	width: 100%;
+	height: 5.6em;
+	color: black;
 }
 
 .arrow-right {
@@ -140,4 +198,8 @@
 
 .page-editor-bottom-button-block {
 	margin-top: 2em;
+}
+
+.create-page-form .form-group {
+	padding-bottom: 1em;
 }

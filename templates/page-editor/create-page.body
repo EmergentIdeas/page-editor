@@ -1,28 +1,32 @@
 <h1>Create New Page</h1>
 __::messages__
-<form method="post" action="/files/create">
-	<div class="control-group">
-		<label class="control-label" for="pageName">Page name:</label>
-		<div class="controls">
-			<input type="text" id="pageName" placeholder="The new page name" name="pageName">.html
+<form class="form create-page-form" method="post" action="/files/create">
+	<div class="form-group">
+		<label class="col-xs-12" for="pageName">Page name:</label>
+		<div class="col-xs-6">
+			<input class="form-control col-sm-4 " type="text" id="pageName" placeholder="The new page name" name="pageName">
 		</div>
+		<div class="col-xs-1" style="line-height: 34px; padding-left: 0;">.html</div>
+		<div class="clearfix"></div>
 	</div>
-	<div class="control-group">
-		<label class="control-label" for="template">Template:</label>
-		<div class="controls">
-			<select id="template" name="template">
+	<div class="form-group">
+		<label class="col-xs-12" for="template">Template:</label>
+		<div class="col-xs-6">
+			<select class="col-sm-4 form-control" id="template" name="template">
 				__templateNames::page-editor/option__
 			</select>
 		</div>
+		<div class="clearfix"></div>
 	</div>
-	<div class="control-group">
-		<label class="control-label" for="destination">Page location:</label>
-		<div class="controls">
-			<select id="destination" name="destination">
+	<div class="control-group form-group">
+		<label class="col-xs-12" for="destination">Page location:</label>
+		<div class="col-xs-6">
+			<select class="col-sm-4 form-control" id="destination" name="destination">
 				__destinations::page-editor/option__
 			</select>
 		</div>
+		<div class="clearfix"></div>
 	</div>
-	
-	<button type="submit">Create</button>
+	<div style="clear: both;"></div>
+	<button class="btn btn-primary" type="submit">Create</button>
 </form>

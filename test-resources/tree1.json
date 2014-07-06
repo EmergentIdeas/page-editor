@@ -1,0 +1,19 @@
+[
+	{
+		"id": "i1",
+        "label": "node1",
+        "children": [
+            { "id": "i2", "label": "child1" },
+            { "id": "i3", "label": "child2" }
+        ],
+        "customClasses": "one two",
+        "itemUrl": "/index.html"
+    },
+    {
+		"id": "i4",
+        "label": "node2",
+        "children": [
+            { "id": "i5", "label": "child3" }
+        ]
+    }
+]
