@@ -1,0 +1,10 @@
+<h1>Testing the Page Data Loaders</h1>
+
+<p>Hello. Today we'll be testing the page data loaders. Below you should see the value of the page 
+from the url and the value of the key "one" from the template data.</p>
+
+<dl>
+  <dt> Page url</dt>  <dd>  __thePageName__</dd>
+  <dt> One (from page loader)</dt> <dd> __templateKeyOne__</dd>
+  <dt> One (from auto loaded page metadata)</dt> <dd> __one__</dd>
+</dl>

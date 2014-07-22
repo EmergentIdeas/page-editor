@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +21,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.emergentideas.page.editor.interfaces.PageDataLoader;
 import com.emergentideas.webhandle.Location;
 import com.emergentideas.webhandle.WebAppLocation;
+import com.emergentideas.webhandle.bootstrap.ConfigurationAtom;
+import com.emergentideas.webhandle.bootstrap.Integrate;
+import com.emergentideas.webhandle.bootstrap.Integrator;
+import com.emergentideas.webhandle.bootstrap.Loader;
 import com.emergentideas.webhandle.exceptions.CouldNotHandle;
 import com.emergentideas.webhandle.exceptions.UnauthorizedAccessException;
 import com.emergentideas.webhandle.exceptions.UserRequiredException;
@@ -34,7 +40,8 @@ import com.emergentideas.webhandle.templates.TemplateInstance;
 import com.emergentideas.webhandle.templates.TemplateSource;
 import com.emergentideas.webhandle.templates.TripartateTemplate;
 
-public class PagesHandle {
+@Integrate
+public class PagesHandle implements Integrator {
 	
 	/**
 	 * The name of the sink to write changes to.
@@ -62,6 +69,8 @@ public class PagesHandle {
 	protected String defaultComplexPropertiesTemplateName = "page-editor/complex-page-properties";
 	
 	protected String complexPropertiesTemplateProperty = "complexPagePropertiesTemplate";
+	
+	protected List<PageDataLoader> pageDataLoaders = Collections.synchronizedList(new ArrayList<PageDataLoader>());
 	
 	@GET
 	@Path("/{page:.+}")
@@ -92,6 +101,7 @@ public class PagesHandle {
 					addMetaToLocation(location, tt);
 				}
 				
+				invokePageDataLoaders(request, location, template, page);
 				
 				return page;
 			}
@@ -120,6 +130,12 @@ public class PagesHandle {
 			prop.load(new StringReader(meta));
 			addIfNotBlank(location, "editablePageKeywords", "keywords", prop);
 			addIfNotBlank(location, "editablePageDescription", "description", prop);
+		}
+	}
+	
+	protected void invokePageDataLoaders(HttpServletRequest request, Location location, TemplateInstance template, String page) {
+		for(PageDataLoader loader : pageDataLoaders) {
+			loader.loadData(request, location, template, page);
 		}
 	}
 	
@@ -295,6 +311,15 @@ public class PagesHandle {
 	
 	protected StreamableResourceSink findSink(Location location) {
 		return (StreamableResourceSink)new WebAppLocation(location).getServiceByName(sinkName);
+	}
+
+	
+	@Override
+	public void integrate(Loader loader, Location location,
+			ConfigurationAtom atom, Object focus) {
+		if(focus != null && focus instanceof PageDataLoader) {
+			pageDataLoaders.add((PageDataLoader)focus);
+		}
 	}
 
 	public String getSinkName() {
