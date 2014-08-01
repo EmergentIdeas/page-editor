@@ -1,5 +1,6 @@
 <h1>Main Menu</h1>
 
 <p>Choose an option below</p>
+__::messages__
 <br/>
 __menuItems::page-editor/menu-item__

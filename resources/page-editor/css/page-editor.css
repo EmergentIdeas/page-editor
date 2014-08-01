@@ -203,3 +203,20 @@
 .create-page-form .form-group {
 	padding-bottom: 1em;
 }
+
+.page-properties-complex {
+	position: relative;
+}
+
+.page-details {
+	position: relative;
+	-webkit-transition: max-height .4s; 
+	-moz-transition: max-height .4s; 
+    transition: max-height .4s;
+    overflow: hidden;
+    max-height: 300px;
+}
+
+.hidden-details {
+	max-height: 0;
+}

@@ -77,7 +77,7 @@ public class PagesResourceSource implements StreamableResourceSink {
 					continue;
 				}
 				foundFiles.add(name);
-				resources.add(new PageResource(name, currentLocation + name));
+				resources.add(new PageResource(name, ensureSlashPrefixed(currentLocation + name)));
 			}
 		}
 		
@@ -128,6 +128,10 @@ public class PagesResourceSource implements StreamableResourceSink {
 
 	protected String ensureSlashTerminated(String location) {
 		return location.endsWith("/") ? location : (location + "/");
+	}
+	
+	protected String ensureSlashPrefixed(String location) {
+		return location.startsWith("/") ? location : ("/" + location);
 	}
 	
 	public Pattern getPageTemplateNamePattern() {

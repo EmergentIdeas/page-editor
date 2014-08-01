@@ -10,7 +10,7 @@
 		</div>
 		<div class="page-properties-inner" >
 			<div class="container">
-				<div class="page-properties-complex">__::$complexPagePropertiesTemplate__</div>
+				<div class="page-properties-complex">__::$complexPagePropertiesTemplate__<div class="clear"></div></div>
 				<div class="page-properties-common">
 					<div class="page-properties-section" >
 						<div class="control-group">

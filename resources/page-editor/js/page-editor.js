@@ -8,7 +8,7 @@ CKEDITOR.config.filebrowserImageBrowseUrl = '/files/browse/type/image';
 CKEDITOR.config.filebrowserUploadUrl = '/files/upload-file';
 
 $(function() {
-	$('.page-properties-inner input, .page-properties-inner textarea').on('keyup keypress blur change', function() {
+	$('.page-properties-inner input, .page-properties-inner textarea, .page-properties-inner select').on('keyup keypress blur change', function() {
 		enablePageSave();
 	});
 	
@@ -94,7 +94,24 @@ $(function() {
 			$(this).after('<br/><input type="file" class="form-control blog-item-attachment-file" name="file' + fileNum + '" />');
 		}
 	});
+	
+	/* Open the pane for the special editing properties */
+	$('.page-details-expander').on('click', function(evt) {
+		evt.preventDefault();
+		openPageDetails(this);
+	});
 });
+
+
+function openPageDetails(pageDetailsLink) {
+	var $detailsPaneToChange = $($(pageDetailsLink).attr('data-details-pane'));
+	if($detailsPaneToChange.hasClass('hidden-details')) {
+		// the currently select pane is closed, so make sure all the others are closed before we open it
+		$('.page-details').addClass('hidden-details');
+	}
+	$detailsPaneToChange.toggleClass('hidden-details');
+	
+}
 
 function enablePageSave() {
 	$('.page-properties-save').removeAttr('disabled');	
