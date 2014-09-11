@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import com.emergentideas.page.editor.data.Author;
 import com.emergentideas.page.editor.data.Category;
 import com.emergentideas.page.editor.data.Category.CategoryType;
+import com.emergentideas.page.editor.data.Comment;
 import com.emergentideas.page.editor.data.Item.ItemType;
 import com.emergentideas.page.editor.data.Item.PubStatus;
 import com.emergentideas.page.editor.data.Item;
@@ -21,6 +22,11 @@ public class PostService {
 	@Resource
 	protected EntityManager entityManager;
 	
+	public void deleteComment(Comment comment) {
+		comment.getItem().getComments().remove(comment);
+		comment.setItem(null);
+		entityManager.remove(comment);
+	}
 	public List<Item> getAllPublishedPostsMostRecentFirst() {
 		return getLastXPublishedPostsMostRecentFirst(null);
 	}
@@ -103,6 +109,11 @@ public class PostService {
 		return null;
 	}
 	
+	public List<Comment> getComments(String slug) {
+		return entityManager.createQuery("select c from Comment c join c.item it where it.slug = :slug")
+			.setParameter("slug", "slug").getResultList();
+	}
+	
 	public void save(SiteSet site) {
 		for(Author author : site.getAuthors()) {
 			save(author);
@@ -127,6 +138,8 @@ public class PostService {
 		entityManager.persist(item);
 	}
 	
-	
+	public void save(Comment comment) {
+		entityManager.persist(comment);
+	}
 
 }

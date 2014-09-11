@@ -14,7 +14,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.StringUtils;
 
 import com.emergentideas.page.editor.data.Attachment;
 import com.emergentideas.page.editor.data.Item;
@@ -29,12 +28,10 @@ import com.emergentideas.webhandle.Inject;
 import com.emergentideas.webhandle.InvocationContext;
 import com.emergentideas.webhandle.Location;
 import com.emergentideas.webhandle.NotNull;
-import com.emergentideas.webhandle.WebAppLocation;
 import com.emergentideas.webhandle.apps.oak.crud.CRUDHandle;
 import com.emergentideas.webhandle.assumptions.oak.RequestMessages;
 import com.emergentideas.webhandle.assumptions.oak.interfaces.User;
 import com.emergentideas.webhandle.composites.db.Db;
-import com.emergentideas.webhandle.files.StreamableResourceSink;
 import com.emergentideas.webhandle.handlers.Handle;
 import com.emergentideas.webhandle.handlers.HttpMethod;
 import com.emergentideas.webhandle.output.DirectRespondent;

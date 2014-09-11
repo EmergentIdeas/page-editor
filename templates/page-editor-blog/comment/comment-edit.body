@@ -1,0 +1,41 @@
+<h1>Edit Comment</h1>
+
+<form method="post" action="/comment/__id__">
+	<div class="control-group">
+		<label class="control-label" for="name">Name</label>
+		<div class="controls">
+			<input class="form-control" type="text" id="name" name="name" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="email">Email</label>
+		<div class="controls">
+			<input class="form-control" type="text" id="email" name="email" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="comment">Comment</label>
+		<div class="controls">
+			<textarea class="form-control" id="comment" name="comment" rows="5"></textarea>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label" for="status">Status</label>
+		<div class="controls">
+			<select class="form-control" id="status" name="status">
+				<option value="DRAFT">draft</option>
+				<option value="PUBLISH">published</option>
+			</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="submitted">Submitted date</label>
+		<div class="controls">
+			<input class="form-control add-picker-if-needed" type="datetime-local" id="submitted" name="submitted" />
+		</div>
+	</div>
+	
+	<br/>
+	<button type="submit" class="btn btn-primary">Save</button>
+</form>

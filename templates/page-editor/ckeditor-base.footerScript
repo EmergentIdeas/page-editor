@@ -1,0 +1,9 @@
+CKEDITOR.disableAutoInline = true;
+CKEDITOR.config.extraPlugins = 'justify,font';
+CKEDITOR.config.allowedContent = true;
+CKEDITOR.config.disableNativeSpellChecker = false;
+pageEditingEnabled = false;
+CKEDITOR.config.filebrowserBrowseUrl = '/files/browse/type/all';
+CKEDITOR.config.filebrowserImageBrowseUrl = '/files/browse/type/image';
+CKEDITOR.config.filebrowserUploadUrl = '/files/upload-file';
+

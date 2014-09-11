@@ -1,0 +1,16 @@
+<form method="post" action="/posts/__slug__/comment" class="form-inline">
+	<input type="hidden" name="ajaxStyle" value="false" />
+	<div class="form-group">
+		<label for="comment">Comment</label>
+		<textarea class="form-control" id="comment" name="comment"></textarea>
+	</div>
+	<div class="form-group">
+		<label for="name">Name</label>
+		<input type="text" placeholder="Jimmy Doe" class="form-control" id="name" name="name" />
+	</div>
+	<div class="form-group">
+		<label for="email">Email</label>
+		<input type="email" placeholder="jimmy@mydomain.com" class="form-control" id="email" name="email" />
+	</div>
+	<button type="submit" class="submit-comment">Submit</button>
+</form>

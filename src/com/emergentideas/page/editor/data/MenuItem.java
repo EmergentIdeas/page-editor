@@ -28,9 +28,9 @@ public class MenuItem {
 	@Column(length = 10000)
 	protected String itemUrl;
 	
-	protected int left;
+	protected int leftBound;
 	
-	protected int right;
+	protected int rightBound;
 	
 	@Transient
 	protected List<MenuItem> children = new ArrayList<MenuItem>();
@@ -76,19 +76,19 @@ public class MenuItem {
 	}
 
 	public int getLeft() {
-		return left;
+		return leftBound;
 	}
 
 	public void setLeft(int left) {
-		this.left = left;
+		this.leftBound = left;
 	}
 
 	public int getRight() {
-		return right;
+		return rightBound;
 	}
 
 	public void setRight(int right) {
-		this.right = right;
+		this.rightBound = right;
 	}
 
 	public List<MenuItem> getChildren() {
@@ -98,9 +98,4 @@ public class MenuItem {
 	public void setChildren(List<MenuItem> children) {
 		this.children = children;
 	}
-
-	
-	
-	
-	
 }

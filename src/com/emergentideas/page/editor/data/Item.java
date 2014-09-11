@@ -13,6 +13,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class Item {
@@ -53,12 +54,35 @@ public class Item {
 	
 	protected PubStatus status = PubStatus.DRAFT;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@OrderColumn(name = "submitted")
+	protected List<Comment> comments = new ArrayList<Comment>();
+	
 	@ManyToOne
 	protected Layout layout;
 	
 	@OneToMany(cascade = {CascadeType.ALL})
 	protected List<Attachment> attachments = new ArrayList<Attachment>();
 
+	public int getCommentCount() {
+		return comments.size();
+	}
+	
+	public int getPublishedCommentCount() {
+		return getPublishedComments().size();
+	}
+	
+	public List<Comment> getPublishedComments() {
+		List<Comment> published = new ArrayList<Comment>();
+		for(Comment comment : published) {
+			if(comment.getStatus() == PubStatus.PUBLISH) {
+				published.add(comment);
+			}
+		}
+		
+		return published;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -154,7 +178,11 @@ public class Item {
 	public void setLayout(Layout layout) {
 		this.layout = layout;
 	}
-	
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
 
 	
 }

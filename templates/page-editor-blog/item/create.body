@@ -1,3 +1,4 @@
+__::page-editor/ckeditor-base__
 <h1>Create Post</h1>
 
 <form action="/post/create" method="post" class="blog-post-form" enctype="multipart/form-data">

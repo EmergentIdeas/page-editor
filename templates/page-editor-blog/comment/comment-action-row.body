@@ -1,0 +1,16 @@
+<tr>
+	<td>
+		<a href="/comment/__id__">__submitted::page-editor/human-date__</a>
+	</td>
+	<td>
+		__status__
+	</td>
+	<td>
+		__name__
+	</td>
+	<td>
+		<form method="post" action="/comment/__id__/delete">
+			<button onclick="return confirm('Are you sure?');" type="submit">&times;</button>
+		</form>
+	</td>
+</tr>

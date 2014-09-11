@@ -220,3 +220,7 @@
 .hidden-details {
 	max-height: 0;
 }
+
+.comments-list th, .comments-list td {
+	padding: 2px 3px 2px 3px;
+}
