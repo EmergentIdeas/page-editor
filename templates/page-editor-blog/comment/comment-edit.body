@@ -1,5 +1,7 @@
 <h1>Edit Comment</h1>
-
+<div class="post-link">
+	<a href="/post/__item/id__">__item/slug__</a>
+</div>
 <form method="post" action="/comment/__id__">
 	<div class="control-group">
 		<label class="control-label" for="name">Name</label>
@@ -37,5 +39,8 @@
 	</div>
 	
 	<br/>
-	<button type="submit" class="btn btn-primary">Save</button>
+	<button type="submit" name="save" class="btn btn-primary">Save</button>
+	<button type="submit" name="publish" class="btn" value="publish">Publish</button>
+	<button onclick="return confirm('Are you sure?');" type="submit" name="delete" class="btn" value="delete">Delete</button>
+	
 </form>

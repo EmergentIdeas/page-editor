@@ -74,7 +74,7 @@ public class Item {
 	
 	public List<Comment> getPublishedComments() {
 		List<Comment> published = new ArrayList<Comment>();
-		for(Comment comment : published) {
+		for(Comment comment : comments) {
 			if(comment.getStatus() == PubStatus.PUBLISH) {
 				published.add(comment);
 			}

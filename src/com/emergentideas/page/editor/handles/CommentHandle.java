@@ -6,7 +6,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.emergentideas.page.editor.data.Comment;
+import com.emergentideas.page.editor.data.Item.PubStatus;
 import com.emergentideas.page.editor.helpers.PageEditorConstants;
 import com.emergentideas.page.editor.initialservice.PostService;
 import com.emergentideas.webhandle.Inject;
@@ -39,9 +42,17 @@ public class CommentHandle {
 	@POST
 	@Template
 	@Wrap("app_page")
-	public Object saveComment(Location location, @Db("id") @Inject Comment comment) {
+	public Object saveComment(Location location, @Db("id") @Inject Comment comment, String save, String publish, String delete) {
+		int itemId = comment.getItem().getId();
 		
-		return new Show("/post/" + comment.getItem().getId());
+		if(StringUtils.isNotBlank(publish)) {
+			comment.setStatus(PubStatus.PUBLISH);
+		}
+		else if(StringUtils.isNotBlank(delete)) {
+			return deleteComment(location, comment);
+		}
+		
+		return new Show("/post/" + itemId);
 	}
 
 	@Path("/{id:\\d+}/delete")

@@ -1,0 +1,20 @@
+<p>You have a new comment!</p>
+
+<p>To have it shown on the site you must change it to "published" by going <a href="__commentUrl__">here</a>.
+<br/>
+<br/>
+<table>
+	<tr>
+		<td>Name</td>
+		<td>__name__</td>
+	</tr>
+	<tr>
+		<td>Email</td>
+		<td>__email__</td>
+	</tr>
+	<tr>
+		<td>Comment</td>
+		<td><pre>__comment__</pre></td>
+	</tr>
+	
+</table> 

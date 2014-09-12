@@ -6,6 +6,11 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.commons.lang.StringEscapeUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.safety.Whitelist;
+
 import com.emergentideas.page.editor.data.Author;
 import com.emergentideas.page.editor.data.Category;
 import com.emergentideas.page.editor.data.Category.CategoryType;
@@ -22,6 +27,8 @@ public class PostService {
 	@Resource
 	protected EntityManager entityManager;
 	
+	protected String lineMarker = "lasdjfellvalfjeljasldf";
+	
 	public void deleteComment(Comment comment) {
 		comment.getItem().getComments().remove(comment);
 		comment.setItem(null);
@@ -29,6 +36,25 @@ public class PostService {
 	}
 	public List<Item> getAllPublishedPostsMostRecentFirst() {
 		return getLastXPublishedPostsMostRecentFirst(null);
+	}
+	
+	public String scrubPostComment(String comment) {
+		if(comment == null) {
+			return null;
+		}
+		
+		comment = comment.replace("\r\n", "\n");
+		comment = comment.replace("\n", lineMarker);
+		
+		// breaks multi-level of escaping, preventing &amp;lt;script&amp;gt; to be rendered as <script>
+		comment = comment.replace("&amp;", "");
+		// decode any encoded html, preventing &lt;script&gt; to be rendered as <script>
+		comment = StringEscapeUtils.unescapeHtml(comment);
+		// remove all html tags, but maintain line breaks
+		comment = Jsoup.clean(comment, "", Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
+		
+		comment = comment.replace(lineMarker, "\n");
+		return comment;
 	}
 	
 	public List<Item> getLastXPublishedPostsMostRecentFirst(Integer numberOfPosts) {

@@ -8,7 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.emergentideas.page.editor.data.Item.PubStatus;
+import com.emergentideas.utils.CryptoUtils;
 
 @Entity
 public class Comment {
@@ -34,6 +37,18 @@ public class Comment {
 	
 	public Comment() {}
 	
+	
+	public String getGravatarImg() {
+		if(StringUtils.isNotBlank(email)) {
+			try {
+				return "//www.gravatar.com/avatar/" + CryptoUtils.generateMD5Hash(email);
+			}
+			catch(Exception e) {
+				
+			}
+		}
+		return "//www.gravatar.com/avatar/00000000000000000000000000000000";
+	}
 	public Integer getId() {
 		return id;
 	}

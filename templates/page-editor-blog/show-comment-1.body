@@ -1,0 +1,16 @@
+<div class="comment">
+	<div class="person-icon">
+		<img class="gravatar" src="__gravatarImg__"/>
+	</div>
+	<div class="comment-content">
+		<div class="name">
+			__name__
+		</div>
+		<div class="date">
+			__submitted::page-editor/human-date__ at __submitted::page-editor/human-time__:
+		</div>
+		<div class="comment-text">
+			__comment::page-editor/text-as-html__
+		</div>
+	</div>
+</div>
