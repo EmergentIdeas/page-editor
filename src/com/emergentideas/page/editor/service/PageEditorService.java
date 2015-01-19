@@ -1,7 +1,9 @@
 package com.emergentideas.page.editor.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -9,6 +11,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang.StringUtils;
 
@@ -238,6 +241,83 @@ public class PageEditorService {
 		return relativePathPrefix + shortName;
 	}
 	
+	public InputStream convertDataURIToBytes(String base64Data) throws UnsupportedEncodingException {
+		if(StringUtils.isBlank(base64Data)) {
+			return null;
+		}
+		int i = base64Data.indexOf(',');
+		
+		String data = base64Data.substring(i + 1);
+		String prefix = base64Data.substring(0, i);
+		prefix = prefix.toLowerCase();
+		
+		byte[] bData = null;
+		if(prefix.endsWith("base64")) {
+			bData = Base64.decodeBase64(data);
+		}
+		else {
+			bData = data.getBytes("UTF-8");
+		}
+		
+		return new ByteArrayInputStream(bData);
+	}
+	
+	public String getSuffixForMimeType(String mimeType) {
+		if(StringUtils.isBlank(mimeType)) {
+			return "ukn";
+		}
+		if(mimeType.contains("png")) {
+			return "png";
+		}
+		if(mimeType.contains("jpeg")) {
+			return "jpg";
+		}
+		
+		return "ukn";
+	}
+	
+	public String getMimeTypeFromDataURI(String base64Data) {
+		if(StringUtils.isBlank(base64Data)) {
+			return null;
+		}
+		int i = base64Data.indexOf(',');
+		
+		String prefix = base64Data.substring(0, i);
+		prefix = prefix.toLowerCase();
+		if(prefix.startsWith("data:")) {
+			prefix = prefix.substring(5);
+		}
+		
+		Integer firstStop = getLowestPositiveInt(prefix.charAt(','), prefix.charAt(';'));
+		
+		if(firstStop != null) {
+			return prefix.substring(0, firstStop);
+		}
+		return prefix;
+	}
+	
+	/**
+	 * Returns the lowest integer which is zero or greater. Returns
+	 * null if no integer was greater than or equal to zero.
+	 */
+	protected Integer getLowestPositiveInt(int ... i) {
+		Integer result = null;
+		for(int item : i) {
+			if(item >= 0) {
+				if(result == null) {
+					result = item;
+				}
+				else {
+					if(item < result) {
+						result = item;
+					}
+				}
+			}
+		}
+		
+		return result;
+	}
+	
 	public static String bookendWithSlash(String path) {
 		if(path.startsWith("/") == false) {
 			path = "/" + path;
@@ -301,6 +381,7 @@ public class PageEditorService {
 		
 		return path.replace('\\', '/');
 	}
+	
 	
 	
 }

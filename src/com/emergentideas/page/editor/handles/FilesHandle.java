@@ -4,14 +4,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.FileHandler;
 
 import javax.annotation.security.RolesAllowed;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.emergentideas.page.editor.helpers.PagesResourceSource;
@@ -19,6 +23,7 @@ import com.emergentideas.page.editor.helpers.ResourceDisplayEntry;
 import com.emergentideas.page.editor.service.PageEditorService;
 import com.emergentideas.webhandle.AppLocation;
 import com.emergentideas.webhandle.Location;
+import com.emergentideas.webhandle.Name;
 import com.emergentideas.webhandle.WebAppLocation;
 import com.emergentideas.webhandle.assumptions.oak.ParmManipulator;
 import com.emergentideas.webhandle.assumptions.oak.RequestMessages;
@@ -26,10 +31,17 @@ import com.emergentideas.webhandle.exceptions.CouldNotHandle;
 import com.emergentideas.webhandle.files.CompositeStreamableResourceSource;
 import com.emergentideas.webhandle.files.Directory;
 import com.emergentideas.webhandle.files.DirectoryManipulator;
+import com.emergentideas.webhandle.files.DirectoryResource;
 import com.emergentideas.webhandle.files.FileStreamableResource;
+import com.emergentideas.webhandle.files.FileStreamableResourceSink;
 import com.emergentideas.webhandle.files.Resource;
+import com.emergentideas.webhandle.files.StreamableResource;
 import com.emergentideas.webhandle.files.StreamableResourceSink;
 import com.emergentideas.webhandle.files.StreamableResourceSource;
+import com.emergentideas.webhandle.files.StreamableResourcesHandler;
+import com.emergentideas.webhandle.json.JSON;
+import com.emergentideas.webhandle.output.DirectRespondent;
+import com.emergentideas.webhandle.output.NoResponse;
 import com.emergentideas.webhandle.output.ResponsePackage;
 import com.emergentideas.webhandle.output.SegmentedOutput;
 import com.emergentideas.webhandle.output.Show;
@@ -47,7 +59,19 @@ public class FilesHandle {
 	@javax.annotation.Resource
 	protected PageEditorService pageEditorService;
 	
+	protected String resizeWidth = "200x";
+	protected File thumbsRoot;
+	protected FileStreamableResourceSink thumbsSink;
+	protected StreamableResourcesHandler thumbsHandle;
 	
+	public FilesHandle() throws IOException {
+		thumbsRoot = File.createTempFile("thumbnails", "dir");
+		thumbsRoot.delete();
+		thumbsRoot.mkdir();
+		thumbsSink = new FileStreamableResourceSink(thumbsRoot);
+		thumbsHandle = new StreamableResourcesHandler(thumbsSink);
+	}
+
 	@GET
 	@Path("create")
 	@Template
@@ -254,11 +278,26 @@ public class FilesHandle {
 	@Template
 	@ResponsePackage("body-only")
 	@RolesAllowed("page-editors")
-	public Object uploadFromListScreen(Location location, FileItem contents, String Referer, String path) throws IOException {
+	public Object uploadFromListScreen(Location location, FileItem contents, String Referer, 
+			String path, String dataUrl, String dataFilename) throws IOException {
 		
-		final String filename = PageEditorService.getLastSectionName(contents.getName());
+		boolean dataUrlStyle = StringUtils.isNotBlank(dataUrl);
+		
+		String filename;
+		if(dataUrlStyle) {
+			filename = dataFilename;
+			if(StringUtils.isBlank(filename)) {
+				filename = System.currentTimeMillis() + "." + 
+						pageEditorService.getSuffixForMimeType(pageEditorService.getMimeTypeFromDataURI(dataUrl));
+			}
+		}
+		else {
+			filename = PageEditorService.getLastSectionName(contents.getName());
+		}
 		
 		path = PageEditorService.bookendWithSlash(path);
+		
+		
 		String resourcePath = path + filename;
 		String sinkPath = resourcePath.substring(1);
 		
@@ -267,7 +306,14 @@ public class FilesHandle {
 			};
 		}
 
-		writeFileToStatic(location, sinkPath, contents.get());
+		byte[] dataToWrite;
+		if(StringUtils.isBlank(dataUrl)) {
+			dataToWrite = contents.get();
+		}
+		else {
+			dataToWrite = IOUtils.toByteArray(pageEditorService.convertDataURIToBytes(dataUrl));
+		}
+		writeFileToStatic(location, sinkPath, dataToWrite);
 		
 		Resource r = new FileStreamableResource(new File(filename));
 		ResourceDisplayEntry entry = new ResourceDisplayEntry(path, r);
@@ -322,6 +368,99 @@ public class FilesHandle {
 		}
 		return new Show(referer);
 	}
+	
+	@Path("thumbnails/urls/{path:.*}")
+	@JSON
+	public Object showUrls(Location location, String path, String fileType) {
+		path = removeSlashes(path);
+		StreamableResourceSource source = findStaticSink(location);
+		Resource rsc = source.get(path);
+		List<String> result = new ArrayList<String>();
+		
+		if(rsc instanceof DirectoryResource) {
+			DirectoryResource dir = (DirectoryResource)rsc;
+			for(Resource child : dir.getEntries()) {
+				if(child instanceof StreamableResource) {
+					
+					FileStreamableResource childRsc = (FileStreamableResource)child;
+					if("image".equalsIgnoreCase(fileType)) {
+						if(isPathImage(childRsc.getName())) {
+							result.add("/" + createPath(path, childRsc.getName()));
+						}
+					}
+					else {
+						result.add("/" + createPath(path, childRsc.getName()));
+					}
+				}
+			}
+		}
+		
+		return result;
+	}
+	
+	protected boolean isPathImage(String path) {
+		if(path == null) {
+			return false;
+		}
+		path = path.toLowerCase();
+		if(path.endsWith(".png") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".gif")) {
+			return true;
+		}
+		return false;
+	}
+
+	
+	protected String createPath(String dirSegment, String lastSegment) {
+		dirSegment = removeSlashes(dirSegment);
+		lastSegment = removeSlashes(lastSegment);
+		return dirSegment + "/" + lastSegment;
+	}
+	
+	/**
+	 * Remove the starting and ending slashes.
+	 */
+	protected String removeSlashes(String s) {
+		if(s.startsWith("/")) {
+			s = s.substring(1);
+		}
+		if(s.endsWith("/")) {
+			s = s.substring(0, s.length() - 1);
+		}
+		return s;
+	}
+	
+	@Path("thumbnails/thumb/{path:.+}")
+	@GET
+	public Object showThumbnailImage(Location location, HttpServletResponse response, String path,
+			ServletContext servletContext, @Name("If-None-Match") String existingETag,
+			HttpServletRequest request) throws IOException, InterruptedException {
+		if(findStaticSink(location).get(path) == null || isPathImage(path) == false) {
+			return new NoResponse();
+		}
+		
+		Resource rsc = thumbsSink.get(removeSlashes(path));
+		if(rsc == null) {
+			createThumbnail(location, path, resizeWidth);
+		}
+		
+		return thumbsHandle.handle(path, servletContext, existingETag, location, request);
+	}
+
+	protected void createThumbnail(Location location, String path, String width) throws IOException, InterruptedException {
+		Resource rsc = findStaticSink(location).get(path);
+		if(rsc != null && rsc instanceof StreamableResource) {
+			String thumbPath = path;
+			StreamableResource in = (StreamableResource)rsc;
+			
+			thumbsSink.write(thumbPath, in.getContent());
+			
+			
+			String absolute = "/" + createPath(thumbsRoot.getAbsolutePath(), thumbPath);
+			String command = String.format("convert -resize %s %s %s", width, absolute, absolute);
+			Runtime.getRuntime().exec(command).waitFor();
+		}
+	}
+
 
 	protected void processFoundResource(List<Resource> resources, Resource r) {
 		if(r != null && r instanceof Directory) {
