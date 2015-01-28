@@ -35,4 +35,11 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Make dialogs simpler.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+	
+	config.allowedContent = true;
+	config.disableNativeSpellChecker = false;
+	config.filebrowserBrowseUrl = '/files/browse/type/all';
+	config.filebrowserImageBrowseUrl = '/files/browse/type/image';
+	config.filebrowserUploadUrl = '/files/upload-file';
+
 };

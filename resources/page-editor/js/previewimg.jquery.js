@@ -135,7 +135,12 @@
 				});
 				$currentitem.find(options.previewDialogLinkSelector).on('click', function(evt) {
 					evt.preventDefault();
-					
+					if($(this).hasClass('delete')) {
+						$field.val(null);
+						var $img = $currentitem.find(options.imgSelector);
+						$img.remove();
+						return;
+					}
 					$.get(options.urlsListPath + url + "?fileType=image", function(data) {
 						var imgObjects = [];
 						$.each(data, function() {
