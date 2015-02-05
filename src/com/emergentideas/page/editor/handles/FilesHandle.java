@@ -172,11 +172,13 @@ public class FilesHandle {
 	@RolesAllowed("page-editors")
 	public Object showMakeDirectory(Location location, RequestMessages messages, String path, String directoryName) {
 		DirectoryManipulator sink = (DirectoryManipulator)findStaticSink(location);
+		DirectoryManipulator templateSink = (DirectoryManipulator)findPagesSink(location);
 		
 		if(path.endsWith("/") == false) {
 			path += "/";
 		}
 		sink.makeDirectory(path + directoryName);
+		templateSink.makeDirectory(path + directoryName);
 
 		messages.getInfoMessages().add("Directory created");
 		String showPath = "/files/view/" + path;

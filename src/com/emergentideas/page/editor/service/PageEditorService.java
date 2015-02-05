@@ -6,8 +6,10 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -154,9 +156,15 @@ public class PageEditorService {
 	}
 	
 	public List<ResourceDisplayEntry> getDisplayEntries(String currentPath, List<com.emergentideas.webhandle.files.Resource> resources) {
+		Set<String> seen = new HashSet<String>();
 		List<ResourceDisplayEntry> result = new ArrayList<ResourceDisplayEntry>();
 		for(com.emergentideas.webhandle.files.Resource r : resources) {
-			result.add(new ResourceDisplayEntry(currentPath, r));
+			ResourceDisplayEntry entry = new ResourceDisplayEntry(currentPath, r);
+			if(seen.contains(entry.getName())) {
+				continue;
+			}
+			seen.add(entry.getName());
+			result.add(entry);
 		}
 		return result;
 	}
