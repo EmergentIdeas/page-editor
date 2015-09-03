@@ -1,62 +1,77 @@
-<div class="row">
-	<div class="col-sm-6">
-		<div class="control-group">
-			<label class="control-label" for="title">Title</label>
-			<div class="controls">
-				<input class="form-control slug-source" type="text" id="title" name="title" />
+<div class="post-item-fields">
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="control-group">
+				<label class="control-label" for="title">Title</label>
+				<div class="controls">
+					<input class="form-control slug-source" type="text" id="title" name="title" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="slug">Slug (a short name for URLs)</label>
+				<div class="controls">
+					<input class="form-control" type="text" id="slug" name="slug" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="status">Status</label>
+				<div class="controls">
+					<select class="form-control" id="status" name="status">
+						<option value="DRAFT">draft</option>
+						<option value="PUBLISH">published</option>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="pubDate">Published date</label>
+				<div class="controls">
+					<input class="form-control add-picker-if-needed" type="datetime-local" id="pubDate" name="pubDate" />
+				</div>
+			</div>
+			<div class="control-group form-group">
+				<div class="controls referenced-images">
+					<div class="linear preview-img" data-img-path="__imageLocationPrefix__">
+						<label class="control-label" for="postImage">Selected picture</label>
+						<input type="hidden" id="postImage" name="postImage" />
+						<div class="chosen-img" id="postImage-img">
+							__!empty(postImage)??postImage::page-editor/referenced-images/current-img__
+							__empty(postImage)??::page-editor/referenced-images/empty-img__
+						</div>
+						<br/>
+						<button type="button" class="btn">Select Image</button>
+					</div>
+				</div>
+			</div>
+			__layouts??::page-editor-blog/layouts-control__
+		</div>
+		<div class="col-sm-6">
+			<div class="control-group">
+				<label class="control-label" for="description">Description</label>
+				<div class="controls">
+					<textarea class="form-control" id="description" name="description" rows="4"></textarea>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" >Current attachments</label>
+				<div class="controls">
+					__attachments::page-editor-blog/attachment-url__
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" >New attachments</label>
+				<div class="controls">
+					<input type="file" class="form-control blog-item-attachment-file" name="file1" />
+				</div>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label" for="slug">Slug (a short name for URLs)</label>
-			<div class="controls">
-				<input class="form-control" type="text" id="slug" name="slug" />
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="status">Status</label>
-			<div class="controls">
-				<select class="form-control" id="status" name="status">
-					<option value="DRAFT">draft</option>
-					<option value="PUBLISH">published</option>
-				</select>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="pubDate">Published date</label>
-			<div class="controls">
-				<input class="form-control add-picker-if-needed" type="datetime-local" id="pubDate" name="pubDate" />
-			</div>
-		</div>
-		__layouts??::page-editor-blog/layouts-control__
-	</div>
-	<div class="col-sm-6">
-		<div class="control-group">
-			<label class="control-label" for="description">Description</label>
-			<div class="controls">
-				<textarea class="form-control" id="description" name="description" rows="4"></textarea>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" >Current attachments</label>
-			<div class="controls">
-				__attachments::page-editor-blog/attachment-url__
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" >New attachments</label>
-			<div class="controls">
-				<input type="file" class="form-control blog-item-attachment-file" name="file1" />
-			</div>
-		</div>
+		
 	</div>
 	
-</div>
-
-
-<div class="control-group">
-	<label class="control-label" for="content">Content</label>
-	<div class="controls">
-		<textarea id="content" name="content" class="ckeditor"></textarea>
+	
+	<div class="control-group">
+		<label class="control-label" for="content">Content</label>
+		<div class="controls">
+			<textarea id="content" name="content" class="ckeditor"></textarea>
+		</div>
 	</div>
 </div>
-

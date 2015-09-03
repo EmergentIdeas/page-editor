@@ -117,6 +117,8 @@ public class PostsHandle extends CRUDHandle<Item> {
 		if(focus != null && focus.getLayout() != null) {
 			location.put("layoutId", focus.getLayout().getId());
 		}
+		
+		location.put("imageLocationPrefix", attachmentPrefix);
 	}
 
 	protected void addPubDateIfNeeded(Item focus) {

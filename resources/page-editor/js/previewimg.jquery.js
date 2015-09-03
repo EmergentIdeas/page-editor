@@ -34,7 +34,7 @@
 			previewDialogLinkSelector: 'a, button',
 			instructionRemovalSelector: '.instructions',
 			urlsListPath: "/files/thumbnails/urls/",
-			thumbImageStyles: 'width: 50px; cursor: pointer;',
+			thumbImageStyles: 'width: 100px; cursor: pointer;',
 			fileUploadUrlPrefix: '/files/upload/',
 			defaultImgDir: '/img',
 			thumbnailsPathPrefix: '/files/thumbnails/thumb'
@@ -116,6 +116,7 @@
 						var reader  = new FileReader();
 						
 						reader.onloadend = function () {
+							
 							$.ajax({
 								url: options.fileUploadUrlPrefix + url,
 								type: 'POST',
@@ -125,7 +126,10 @@
 									dataFilename: file.name
 								}
 							});
-							$field.val('/' + url + '/' + file.name);
+							
+							var finalUrl = '/' + url + (url.endsWith('/') ? '' : '/') + file.name;
+							
+							$field.val(finalUrl);
 							$img.attr('src', reader.result);
 							$currentitem.find(options.instructionRemovalSelector).remove();
 						}

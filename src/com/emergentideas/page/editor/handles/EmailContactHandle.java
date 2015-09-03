@@ -15,9 +15,9 @@ import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
-
 import com.emergentideas.entityclasstools.NameParser;
 import com.emergentideas.page.editor.helpers.SubmitParameter;
+import com.emergentideas.page.editor.service.InputToStaticTextTransformer;
 import com.emergentideas.webhandle.AppLocation;
 import com.emergentideas.webhandle.Location;
 import com.emergentideas.webhandle.WebAppLocation;
@@ -30,6 +30,7 @@ import com.emergentideas.webhandle.output.Template;
 import com.emergentideas.webhandle.output.Wrap;
 import com.emergentideas.webhandle.templates.TemplateInstance;
 import com.emergentideas.webhandle.templates.TemplateSource;
+import com.emergentideas.webhandle.transformers.InputValuesTransformer;
 
 public class EmailContactHandle {
 
@@ -41,6 +42,10 @@ public class EmailContactHandle {
 
 	protected String[] emailTo = new String[0];
 	protected String fromEmail = "contact@emergentideas.com";
+
+	protected InputValuesTransformer transformer = new InputValuesTransformer();
+	protected InputToStaticTextTransformer inputElementTransformer = new InputToStaticTextTransformer();
+	protected boolean transformEmail = true;
 
 	@Resource
 	protected EmailService emailService;
@@ -72,12 +77,22 @@ public class EmailContactHandle {
 		
 		Location loc = addParameterObjects(request);
 		manip.addRequestParameters(loc);
-		loc.put("formName", "A Contact From the Web");
+		setFormName(loc);
 		
 		TemplateSource ts = new WebAppLocation(location).getServiceByType(TemplateSource.class);
 		emailForm(loc, ts, getContactEmailTemplate());
 		
 		return new Show(successPage);
+	}
+	
+	protected void setFormName(Location loc) {
+		loc.put("formName", "A Contact From the Web");
+	}
+	
+	protected void transformEmail(SegmentedOutput so, Location location) {
+		
+		transformer.transform(so, location);
+		inputElementTransformer.transform(so, location);
 	}
 	
 	protected Location addParameterObjects(HttpServletRequest request) {
@@ -113,6 +128,9 @@ public class EmailContactHandle {
 		TemplateInstance ti = ts.get(templateName);
 		ti.render(so, loc, null, null);
 		
+		if(transformEmail) {
+			transformEmail(so, loc);
+		}
 		
 		String body = so.getStream("body").toString();
 		boolean result = emailService.sendEmail(emailTo, getFromEmail(loc), null, null, (String)loc.get("formName") + " - " + (String)loc.get("date"), null, body);

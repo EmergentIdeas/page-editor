@@ -237,6 +237,7 @@ public class FilesHandle {
 		else {
 			r = findPagesResourceSource(location).get(path);
 			processFoundResource(resources, r);
+			pageEditorService.sortResources(resources);
 		}
 		
 		List<ResourceDisplayEntry> disp = pageEditorService.getDisplayEntries(path, resources);

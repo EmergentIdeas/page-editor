@@ -47,6 +47,9 @@ public class Item {
 	@Column(length = 200000)
 	protected String content;
 	
+	@Lob
+	protected String postImage; 
+	
 	@ManyToMany(cascade = CascadeType.ALL)
 	protected List<Category> categories = new ArrayList<Category>();
 	
@@ -183,6 +186,13 @@ public class Item {
 		return comments;
 	}
 
+	public String getPostImage() {
+		return postImage;
+	}
+
+	public void setPostImage(String postImage) {
+		this.postImage = postImage;
+	}
 
 	
 }

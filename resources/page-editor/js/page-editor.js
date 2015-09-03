@@ -50,6 +50,7 @@ $(function() {
 		$(this).hide();
 		turnOnEditors();
 		$('.edit-content-inline').addClass('edit-content-inline-show-is-editable');
+		$('body').addClass('now-editing-page');
 		
 		var $pageprops = $('#page-properties');
 		var height = $pageprops.height();

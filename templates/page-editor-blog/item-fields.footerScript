@@ -1,0 +1,5 @@
+
+$(function() {
+	$('.preview-img').previewimg();
+});
+

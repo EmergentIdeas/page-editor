@@ -96,15 +96,19 @@ public class ResourceDisplayEntry {
 	
 	public String getLargeTileImage() {
 		if(resource == null) {
-			return "/page-editor/img/yellow-folder-icon.jpg";
+			return "/vrsc/123/page-editor/img/yellow-folder-icon.jpg";
 		}
 		if(resource instanceof Directory) {
-			return "/page-editor/img/yellow-folder-icon.jpg";
+			return "/vrsc/123/page-editor/img/yellow-folder-icon.jpg";
 		}
 		if(resource instanceof NamedResource) {
 			NamedResource nr = (NamedResource)resource;
 			if(PageEditorService.isImageFilename(nr.getName())) {
-				return getResourcePath();
+				String s = getResourcePath();
+				if(s.startsWith("/") == false) {
+					s = "/" + s;
+				}
+				return s;
 			}
 		}
 		return "/page-editor/img/file-icon-md.png";

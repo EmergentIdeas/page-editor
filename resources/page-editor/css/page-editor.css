@@ -82,7 +82,11 @@
 	background-color: black;
 	background-image: url('/page-editor/img/edit-background.png');
 	color: white;
-	z-index: 10;
+	z-index: 100;
+}
+
+#page-properties a {
+	color: white;
 }
 
 #page-properties-button-row {
@@ -224,3 +228,4 @@
 .comments-list th, .comments-list td {
 	padding: 2px 3px 2px 3px;
 }
+
