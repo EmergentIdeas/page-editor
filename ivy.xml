@@ -15,11 +15,19 @@
     	<conf name="appdep" />
     	<conf name="test" />
     	<conf name="sources" />
-    	<conf name="empty" />
+		<conf name="empty" />
+		<conf name="javabin" />
+		<conf name="resources" />
+		<conf name="templates" />
+		<conf name="configuration" />
     </configurations>
     <publications>
-    	<artifact name="page-editor" type="jar" conf="appdep" />
-    	<artifact name="page-editor-sources" type="source" ext="jar" conf="sources"/>
+		<artifact name="page-editor" type="jar" conf="appdep" />
+		<artifact name="page-editor-javabin" type="jar" conf="javabin" />
+    	<artifact name="page-editor-javabin-sources" type="source" ext="jar" conf="sources"/>
+		<artifact name="page-editor-resources" type="zip" conf="resources" />
+		<artifact name="page-editor-templates" type="zip" conf="templates" />
+		<artifact name="page-editor-configuration" type="zip" conf="configuration" />
     </publications>
     <dependencies>
     	<dependency org="com.emergentideas" name="webhandle" rev="[1.0.0.24,)" conf="build" />

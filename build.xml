@@ -39,6 +39,7 @@
 	
 	<!-- locations for doing the work of building the plugin -->
 	<property name="dist"  location="dist"/>
+	<property name="javabin"  location="javabin"/>
 	<property name="artifacts" location="artifacts" />
 	
 	
@@ -90,6 +91,7 @@
 		<mkdir dir="${configuration}" />
 		<mkdir dir="${lib}" />
 		<mkdir dir="${dist}" />
+		<mkdir dir="${javabin}" />
 		<mkdir dir="${artifacts}" />
 		<mkdir dir="${jetty}" />
 		<mkdir dir="${testAppBin}" />
@@ -154,6 +156,11 @@
 			</fileset>
 		</copy>
 		
+		<copy todir="${javabin}">
+			<fileset dir="${dist}">
+			</fileset>
+		</copy>
+		
 		<!-- Copies the templates to a place in compiled classes tree -->
 		<copy todir="${dist}/${app.package.root}/templates">
 			<fileset dir="${templates}" >
@@ -176,7 +183,11 @@
 	<!-- builds a jar for compiled material and the sources both -->
 	<target name="dist" depends="compile">
 		<jar jarfile="${artifacts}/${organisation}-${ant.project.name}.jar" basedir="${dist}"/>
-		<zip destfile="${artifacts}/${organisation}-${ant.project.name}-sources.jar" basedir="${src}" />
+		<zip destfile="${artifacts}/${organisation}-${ant.project.name}-javabin-sources.jar" basedir="${src}" />
+		<jar jarfile="${artifacts}/${organisation}-${ant.project.name}-javabin.jar" basedir="${javabin}" />
+		<zip destfile="${artifacts}/${organisation}-${ant.project.name}-resources.zip" basedir="${resources}" />
+		<zip destfile="${artifacts}/${organisation}-${ant.project.name}-templates.zip" basedir="${templates}" />
+		<zip destfile="${artifacts}/${organisation}-${ant.project.name}-configuration.zip" basedir="${configuration}" />
 	</target>
 	
 	<!-- publishes the jars to the local repo so that they can be commited to git, moved to a server, etc. -->
