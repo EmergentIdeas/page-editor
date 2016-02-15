@@ -46,6 +46,7 @@ public class EmailContactHandle {
 	protected InputValuesTransformer transformer = new InputValuesTransformer();
 	protected InputToStaticTextTransformer inputElementTransformer = new InputToStaticTextTransformer();
 	protected boolean transformEmail = true;
+	protected boolean replaceInputs = true;
 
 	@Resource
 	protected EmailService emailService;
@@ -76,7 +77,6 @@ public class EmailContactHandle {
 		}
 		
 		Location loc = addParameterObjects(request);
-		manip.addRequestParameters(loc);
 		setFormName(loc);
 		
 		TemplateSource ts = new WebAppLocation(location).getServiceByType(TemplateSource.class);
@@ -92,7 +92,9 @@ public class EmailContactHandle {
 	protected void transformEmail(SegmentedOutput so, Location location) {
 		
 		transformer.transform(so, location);
-		inputElementTransformer.transform(so, location);
+		if(replaceInputs) {
+			inputElementTransformer.transform(so, location);
+		}
 	}
 	
 	protected Location addParameterObjects(HttpServletRequest request) {

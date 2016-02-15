@@ -38,7 +38,7 @@
     	<dependency org="net.sf.webdav-servlet" name="webdav-servlet" rev="2.0" conf="appdep->default" />
     	
     	
-    	<dependency org="com.emergentideas" name="crud_tools" rev="[1.0.0.3,)" conf="appdep" />
+    	<dependency org="com.emergentideas" name="crud-tools" rev="latest.integration" conf="build->appdep" />
 		<dependency org="com.emergentideas" name="entity-class-tools" rev="latest.integration" conf="appdep" />
     		
     	<!-- For testing code -->

@@ -15,6 +15,7 @@ import javax.ws.rs.Path;
 
 import org.apache.commons.fileupload.FileItem;
 
+import com.ei.tools.crud.CRUDHandle;
 import com.emergentideas.page.editor.data.Attachment;
 import com.emergentideas.page.editor.data.Item;
 import com.emergentideas.page.editor.data.Item.PubStatus;
@@ -28,7 +29,6 @@ import com.emergentideas.webhandle.Inject;
 import com.emergentideas.webhandle.InvocationContext;
 import com.emergentideas.webhandle.Location;
 import com.emergentideas.webhandle.NotNull;
-import com.emergentideas.webhandle.apps.oak.crud.CRUDHandle;
 import com.emergentideas.webhandle.assumptions.oak.RequestMessages;
 import com.emergentideas.webhandle.assumptions.oak.interfaces.User;
 import com.emergentideas.webhandle.composites.db.Db;
