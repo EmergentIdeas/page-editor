@@ -63,7 +63,7 @@ public class EmailContactHandle {
 	@POST
 	@Template
 	@Wrap("public_page")
-	public Object contactFormPost(Location location, HttpServletRequest request, RequestMessages messages, ParmManipulator manip, String vrf) {
+	public Object contactFormPost(Location location, HttpServletRequest request, RequestMessages messages, ParmManipulator manip, String vrf, String contactInfo) {
 		if(StringUtils.isBlank(vrf)) {
 			messages.getErrorMessages().add("Please include an answer to the stop-spambots question.");
 			manip.addRequestParameters(location);
@@ -74,6 +74,11 @@ public class EmailContactHandle {
 			messages.getErrorMessages().add("Wait! Looks like your answer to the stop-spambots question wasn't what we expect. Would you please try again?");
 			manip.addRequestParameters(location);
 			return getContactFormTemplate();
+		}
+		
+		if(StringUtils.isNotBlank(contactInfo) && contactInfo.toLowerCase().contains("mark357177")) {
+			// blacklist a problem emailer
+			return new Show(successPage);
 		}
 		
 		Location loc = addParameterObjects(request);
