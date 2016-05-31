@@ -1,0 +1,5 @@
+__::includes__
+__::page-editor/editable__
+
+<div class="dialog-test-one">
+</div>

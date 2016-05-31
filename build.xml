@@ -185,7 +185,7 @@
 		<jar jarfile="${artifacts}/${organisation}-${ant.project.name}.jar" basedir="${dist}"/>
 		<zip whenempty="create" destfile="${artifacts}/${organisation}-${ant.project.name}-javabin-sources.jar" basedir="${src}" />
 		<jar jarfile="${artifacts}/${organisation}-${ant.project.name}-javabin.jar" basedir="${javabin}" />
-		<zip whenempty="create" destfile="${artifacts}/${organisation}-${ant.project.name}-resources.zip" basedir="${resources}" />
+		<zip whenempty="create" destfile="${artifacts}/${organisation}-${ant.project.name}-resources.zip" basedir="${resources}" excludes="**/node_modules,**/node_modules/**" />
 		<zip whenempty="create" destfile="${artifacts}/${organisation}-${ant.project.name}-templates.zip" basedir="${templates}" />
 		<zip whenempty="create" destfile="${artifacts}/${organisation}-${ant.project.name}-configuration.zip" basedir="${configuration}" />
 	</target>

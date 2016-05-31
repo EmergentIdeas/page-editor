@@ -1,0 +1,26 @@
+#!/bin/bash
+# newerless=`find . -cnewer static_content/css/pages.css -name '*.less'`
+# if [ ${#newerless} -ne 0 ] 
+# then
+# 	echo 'building less'
+# 	echo 'Pages css errors:' > css-build-errors.txt
+# 	lessc static_content/css/pages.less > static_content/css/pages.css 2>> css-build-errors.txt
+# 	echo 'App errors:' >> css-build-errors.txt
+# 	lessc static_content/css/app.less > static_content/css/app.css 2>> css-build-errors.txt
+# fi
+
+OUTPUT_LOCATION="test-resources/js/pages.js"
+
+newerjs=`find node -cnewer $OUTPUT_LOCATION -name '*.js'`
+newertmpl=`find node/templates -cnewer $OUTPUT_LOCATION -name '*.tmpl'`
+if [ ${#newerjs} -ne 0 ] || [ ${#newertmpl} -ne 0 ]
+then
+echo 'building js'
+cd node
+node_modules/browserify/bin/cmd.js -d pages.js > ../test-resources/js/pages.debug.js 2> ../js-build-errors.txt
+node_modules/browserify/bin/cmd.js pages.js > $OUTPUT_LOCATION
+
+#node_modules/browserify/bin/cmd.js -d app.js > ../static_content/js/app.debug.js
+# node_modules/browserify/bin/cmd.js app.js > ../static_content/js/app.js 2>> ../js-build-errors.txt
+cd ..
+fi

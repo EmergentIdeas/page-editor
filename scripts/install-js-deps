@@ -1,0 +1,11 @@
+#!/bin/bash
+packagefiles=`find dep-resources -name 'package.json'`
+cd node
+for pn in $packagefiles
+do
+	noderepo=`dirname $pn`
+	echo $noderepo
+	relnoderepo="../$noderepo"
+	npm install "$relnoderepo"
+done
+npm install

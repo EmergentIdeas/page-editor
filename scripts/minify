@@ -1,0 +1,7 @@
+cd node
+node_modules/yuicompressor/nodejs/cli.js ../static_content/js/pages.js > ../static_content/js/pages.min.js
+node_modules/yuicompressor/nodejs/cli.js ../static_content/js/app.js > ../static_content/js/app.min.js
+node_modules/yuicompressor/nodejs/cli.js ../static_content/css/pages.css > ../static_content/css/pages.min.css
+node_modules/yuicompressor/nodejs/cli.js ../static_content/css/app.css > ../static_content/css/app.min.css
+cd ..
+

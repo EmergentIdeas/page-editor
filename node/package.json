@@ -1,0 +1,25 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "The top level node module for this app",
+  "main": "index.js",
+  "devDependencies": {
+    "browserify": "latest",
+    "stringify": "latest",
+    "yuicompressor": "latest"
+  },
+  "dependencies": {
+    "jquery": "1.12.2",
+    "jquery-ui": "latest",
+    "bootstrap": "latest",
+    "tripartite": "git+https://git@github.com/EmergentIdeas/tripartite.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "browserify": {
+    "transform": ["stringify"]
+  },
+  "author": "",
+  "license": "ISC"
+}

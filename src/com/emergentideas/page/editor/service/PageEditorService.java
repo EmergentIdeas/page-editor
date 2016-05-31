@@ -59,6 +59,9 @@ public class PageEditorService {
 	public void getDescendentDirectoryNames(StreamableResourceSource source, String directoryName, List<String> directoryNames) {
 		
 		com.emergentideas.webhandle.files.Resource r = source.get(directoryName);
+		if(r == null && directoryName.length() > 1 && directoryName.charAt(0) == '/') {
+			r = source.get(directoryName.substring(1));
+		}
 		
 		if(r != null && r instanceof Directory) {
 			Directory d = (Directory)r;
