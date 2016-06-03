@@ -24,8 +24,8 @@
 	
 	<resolvers>
 		<filesystem name="local-resolver">
-			<ivy pattern="/data/repositories/ivyrepo/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
-			<artifact pattern="/data/repositories/ivyrepo/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+			<ivy pattern="/data/repo/ivyrepo/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+			<artifact pattern="/data/repo/ivyrepo/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
 		</filesystem>
 		<url name="com.emergentideas.public" >
 			<ivy pattern="http://ivyrepo.emergentideas.com/ivyrepo/release/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
