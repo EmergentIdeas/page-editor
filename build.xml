@@ -58,7 +58,10 @@
     <property name="ivylibs" location="ivylibs" />
     <property name="testTemplates" location="test-templates" />
     <property name="testResoruces" location="test-resources" />
-	
+	<property name="depTemplates"  location="dep-templates"/>
+	<property name="depResources"  location="dep-resources"/>
+	<property name="depConfiguration"  location="dep-configuration"/>
+
 	<ivy:settings file="settings.xml" />
 
 	<!-- increment the version number in preparation of publishing a new version of the plugin -->
@@ -97,6 +100,9 @@
 		<mkdir dir="${testAppBin}" />
 		<mkdir dir="${testResoruces}" />
 		<mkdir dir="${testTemplates}" />
+		<mkdir dir="${depTemplates}" />
+		<mkdir dir="${depResources}" />
+		<mkdir dir="${depConfiguration}" />
 	</target>
 
     <target name="compile-test" depends="init" description="compile the test app source" >
@@ -180,6 +186,49 @@
 		</copy>
 	</target>
 	
+	<target name="file-deps" depends="init" >
+		<!-- <ivy:retrieve pattern="${ivylibs}/[artifact](-[classifier])-[revision].jar" type="jar" conf="appdep"/>
+		<ivy:retrieve pattern="${ivylibs}/[artifact](-[classifier])-[revision].jar" type="jar" conf="javabin"/>
+		<ivy:retrieve pattern="${ivylibs}/[artifact](-[classifier])-[revision].jar" type="jar" conf="deps"/>
+		<ivy:retrieve pattern="${ivylibs}/[artifact](-[classifier])-[revision].jar" type="jar" conf="test"/> -->
+		
+		<ivy:retrieve pattern="${depResources}/[artifact](-[classifier])-[revision].zip" type="zip" conf="testresources"/>
+		<unzip dest="${depResources}">
+			<fileset dir="${depResources}">
+				<include name="**/*.zip"/>
+			</fileset>
+		</unzip>
+		<delete >
+			<fileset dir="${depResources}" includes="**/*.zip"/>
+		</delete>
+		
+		<ivy:retrieve pattern="${depTemplates}/[artifact](-[classifier])-[revision].zip" type="zip" conf="testtemplates"/>
+		<unzip dest="${depTemplates}">
+			<fileset dir="${depTemplates}">
+				<include name="**/*.zip"/>
+			</fileset>
+		</unzip>
+		<delete >
+			<fileset dir="${depTemplates}" includes="**/*.zip"/>
+		</delete>
+		
+		<ivy:retrieve pattern="${depConfiguration}/[artifact](-[classifier])-[revision].zip" type="zip" conf="testconfiguration"/>
+		<unzip dest="${depConfiguration}">
+			<fileset dir="${depConfiguration}">
+				<include name="**/*.zip"/>
+			</fileset>
+		</unzip>
+		<delete >
+			<fileset dir="${depConfiguration}" includes="**/*.zip"/>
+		</delete>
+
+		<!-- <exec executable="scripts/install-js-deps">
+		</exec>
+		<exec executable="scripts/deps-by-script">
+		</exec> -->
+	</target>
+
+	
 	<!-- builds a jar for compiled material and the sources both -->
 	<target name="dist" depends="compile">
 		<jar jarfile="${artifacts}/${organisation}-${ant.project.name}.jar" basedir="${dist}"/>
@@ -223,7 +272,7 @@
             </copy>
     </target>
 
-    <target name="test-app-prep" depends="jetty,test-prep,compile-test">
+    <target name="test-app-prep" depends="jetty,test-prep,file-deps,compile-test">
     </target>
 
     <target name="run" >

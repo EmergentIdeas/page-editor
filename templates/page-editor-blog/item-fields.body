@@ -29,17 +29,9 @@
 				</div>
 			</div>
 			<div class="control-group form-group">
-				<div class="controls referenced-images">
-					<div class="linear preview-img" data-img-path="__imageLocationPrefix__">
-						<label class="control-label" for="postImage">Selected picture</label>
-						<input type="hidden" id="postImage" name="postImage" />
-						<div class="chosen-img" id="postImage-img">
-							__!empty(postImage)??postImage::page-editor/referenced-images/current-img__
-							__empty(postImage)??::page-editor/referenced-images/empty-img__
-						</div>
-						<br/>
-						<button type="button" class="btn">Select Image</button>
-					</div>
+				<label class="control-label" for="postImage">Post image</label>
+				<div class="controls">
+					<input class="form-control" type="text" id="postImage" placeholder="" name="postImage" data-image-dir="__imageLocationPrefix__"/>
 				</div>
 			</div>
 			__layouts??::page-editor-blog/layouts-control__

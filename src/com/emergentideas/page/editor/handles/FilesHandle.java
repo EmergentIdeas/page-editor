@@ -3,6 +3,7 @@ package com.emergentideas.page.editor.handles;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.FileHandler;
 
@@ -50,6 +51,7 @@ import com.emergentideas.webhandle.output.Wrap;
 import com.emergentideas.webhandle.templates.TemplateSource;
 
 @Path("/files/")
+@javax.annotation.Resource
 public class FilesHandle {
 	protected String pagesSinkName;
 	protected String staticResourcesSinkName;
@@ -86,8 +88,7 @@ public class FilesHandle {
 		location.put("destinations", destinations);
 		pageEditorService.getDescendentDirectoryNames(findPagesSink(location), "", destinations);
 		removeDestination(destinations, pageTemplatesLocation);
-		
-		
+		Collections.sort(destinations);
 		
 		return "page-editor/create-page";
 	}
@@ -478,19 +479,19 @@ public class FilesHandle {
 		return comp;
 	}
 	
-	protected StreamableResourceSink findPagesResourceSource(Location location) {
+	public StreamableResourceSink findPagesResourceSource(Location location) {
 		return new PagesResourceSource(findPagesSink(location));
 	}
 	
-	protected StreamableResourceSink findPagesSink(Location location) {
+	public StreamableResourceSink findPagesSink(Location location) {
 		return findSink(location, pagesSinkName);
 	}
 	
-	protected StreamableResourceSink findStaticSink(Location location) {
+	public StreamableResourceSink findStaticSink(Location location) {
 		return findSink(location, staticResourcesSinkName);
 	}
 	
-	protected StreamableResourceSink findSink(Location location, String sinkName) {
+	public StreamableResourceSink findSink(Location location, String sinkName) {
 		return (StreamableResourceSink)new WebAppLocation(location).getServiceByName(sinkName);
 	}
 

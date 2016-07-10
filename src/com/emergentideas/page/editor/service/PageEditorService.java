@@ -15,10 +15,12 @@ import javax.annotation.Resource;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.emergentideas.page.editor.helpers.ResourceDisplayComparator;
 import com.emergentideas.page.editor.helpers.ResourceDisplayEntry;
+import com.emergentideas.page.editor.interfaces.TemplateRewriter;
 import com.emergentideas.webhandle.Location;
 import com.emergentideas.webhandle.WebAppLocation;
 import com.emergentideas.webhandle.files.Directory;
@@ -75,8 +77,12 @@ public class PageEditorService {
 			}
 		}
 	}
-	
+
 	public void copyTemplate(StreamableResourceSink sink, String sourceLocation, String sourceName, String destinationTemplatePath) throws IOException {
+		copyTemplateAndRewrite(sink, sourceLocation, sourceName, destinationTemplatePath);
+	}
+	public void copyTemplateAndRewrite(StreamableResourceSink sink, String sourceLocation, String sourceName, String destinationTemplatePath,
+			TemplateRewriter ... rewriters) throws IOException {
 		clipFirstSlashIfPresent(destinationTemplatePath);
 		
 		Directory d = (Directory)sink.get(sourceLocation);
@@ -84,7 +90,15 @@ public class PageEditorService {
 			if(child instanceof NamedResource && child instanceof StreamableResource && child instanceof Directory == false) {
 				NamedResource nr = (NamedResource)child;
 				if(sourceName.equals(getNameWithoutSuffix(nr.getName()))) {
-					sink.write(destinationTemplatePath + "." + getNameSuffix(nr.getName()), ((StreamableResource)child).getContent());
+					InputStream content = ((StreamableResource)child).getContent();
+					String destPath = destinationTemplatePath + "." + getNameSuffix(nr.getName());
+					if(rewriters != null) {
+						for(TemplateRewriter rewriter : rewriters) {
+							content = new ByteArrayInputStream(rewriter.transform(IOUtils.toString(content), destPath).getBytes());
+						}
+					}
+					
+					sink.write(destPath, content);
 				}
 			}
 		}

@@ -51,7 +51,7 @@ public class PostsHandle extends CRUDHandle<Item> {
 	protected PageEditorService pageEditorService;
 	
 	protected String sinkName = "staticResources";
-	protected String attachmentPrefix = "img/";
+	protected String attachmentPrefix = "/img";
 
 	@Override
 	public String getTemplatePrefix() {

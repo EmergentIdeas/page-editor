@@ -18,7 +18,7 @@ then
 echo 'building js'
 cd node
 node_modules/browserify/bin/cmd.js -d pages.js > ../test-resources/js/pages.debug.js 2> ../js-build-errors.txt
-node_modules/browserify/bin/cmd.js pages.js > $OUTPUT_LOCATION
+node_modules/browserify/bin/cmd.js pages.js > ../${OUTPUT_LOCATION}
 
 #node_modules/browserify/bin/cmd.js -d app.js > ../static_content/js/app.debug.js
 # node_modules/browserify/bin/cmd.js app.js > ../static_content/js/app.js 2>> ../js-build-errors.txt

@@ -1,6 +1,6 @@
 <h1>Edit Author</h1>
 
-<form action="/author/__id__" method="post" >
+<form action="/author/__id__" method="post" class="author-post-form" >
 	__::page-editor-blog/author-fields__
 	<br/>
 	<button class="btn btn-primary" type="submit">Save</button>

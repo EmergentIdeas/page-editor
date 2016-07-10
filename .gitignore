@@ -9,3 +9,8 @@ jetty
 testAppBin
 static_content
 javabin
+dep-configuration
+dep-resources
+dep-templates
+js-build-errors.txt
+css-build-errors.txt

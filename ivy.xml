@@ -20,6 +20,10 @@
 		<conf name="resources" />
 		<conf name="templates" />
 		<conf name="configuration" />
+		<conf name="testjavabin" />
+		<conf name="testresources" />
+		<conf name="testtemplates" />
+		<conf name="testconfiguration" />
     </configurations>
     <publications>
 		<artifact name="page-editor" type="jar" conf="appdep" />
@@ -40,6 +44,11 @@
     	
     	<dependency org="com.emergentideas" name="crud-tools" rev="latest.integration" conf="build->appdep" />
 		<dependency org="com.emergentideas" name="entity-class-tools" rev="latest.integration" conf="appdep" />
+
+		<dependency org="com.emergentideas" name="crud-tools" rev="latest.integration" conf="testjavabin->javabin" />
+		<dependency org="com.emergentideas" name="crud-tools" rev="latest.integration" conf="testresources->resources" />
+		<dependency org="com.emergentideas" name="crud-tools" rev="latest.integration" conf="testtemplates->templates" />
+		<dependency org="com.emergentideas" name="crud-tools" rev="latest.integration" conf="testconfiguration->configuration" />
     		
     	<!-- For testing code -->
 		<dependency org="org.mockito" name="mockito-all" rev="1.9.5-rc1" conf="test"/>

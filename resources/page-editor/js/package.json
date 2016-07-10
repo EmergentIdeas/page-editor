@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "tripartite": "^1.0.2"
+    "tripartite": "^1.0.2",
+	"ei-pic-browser": "git+ssh://git@git.emergentideas.com:ei-pic-browser.git"
   }
 }

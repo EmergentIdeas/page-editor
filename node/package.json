@@ -11,8 +11,9 @@
   "dependencies": {
     "jquery": "1.12.2",
     "jquery-ui": "latest",
-    "bootstrap": "latest",
-    "tripartite": "git+https://git@github.com/EmergentIdeas/tripartite.git"
+	"bootstrap": "latest",
+	"ei-pic-browser": "git+ssh://git@git.emergentideas.com:ei-pic-browser.git",
+    "tripartite": "latest"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
