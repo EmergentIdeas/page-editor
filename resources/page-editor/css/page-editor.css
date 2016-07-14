@@ -229,3 +229,6 @@
 	padding: 2px 3px 2px 3px;
 }
 
+div.dialog-frame {
+	z-index: 10100;
+}

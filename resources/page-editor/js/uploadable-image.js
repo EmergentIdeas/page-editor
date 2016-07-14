@@ -38,9 +38,13 @@ var UploadableImage = function(inputControl) {
 			
 			self.$inputControl.val(finalUrl);
 		}, prefix)
-		
+		self.img = img
 		img.render()
 	})
+}
+
+UploadableImage.prototype.cleanup = function() {
+	this.img.cleanup()
 }
 
 module.exports = UploadableImage
