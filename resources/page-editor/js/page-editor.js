@@ -2,9 +2,9 @@ var UploadableImage = require('./uploadable-image')
 var CKEditorDrop = require('ei-pic-browser/ckeditor-drop')
 var PicUpload = require('ei-pic-browser/pic-upload')
 
-var $ = require('jquery')
+var $ = window.jQuery
 if(!window.jQuery) {
-	window.jQuery = $
+	window.jQuery = $ = require('jquery')
 }
 
 if(typeof CKEDITOR != 'undefined') {
