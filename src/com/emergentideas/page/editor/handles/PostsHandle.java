@@ -139,7 +139,11 @@ public class PostsHandle extends CRUDHandle<Item> {
 			focus.getAttachments().add(new Attachment(focus, pageEditorService.writeNewAttachment(location, file, sinkName, attachmentPrefix)));
 		}
 	}
-
+	
+	@Override
+	protected String getOrderByString() {
+		return " order by r.pubDate desc ";
+	}
 
 	@Override
 	public List<Item> findEntitiesToShow(InvocationContext context, User user,

@@ -68,7 +68,7 @@ public class PostService {
 	}
 	
 	public List<Item> getAllPostsMostRecentFirst() {
-		return entityManager.createQuery("select i from Item i where type = :type order by id desc")
+		return entityManager.createQuery("select i from Item i where type = :type order by i.pubDate desc nulls first")
 		.setParameter("type", ItemType.POST).getResultList();
 	}
 	

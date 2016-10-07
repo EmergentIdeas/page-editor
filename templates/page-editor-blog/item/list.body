@@ -1,4 +1,7 @@
 <h1>All Posts</h1>
+<p>
+<a class="data-table-new-link" href="/post/create">Create New</a>
+</p>
 __table::crud-tools/dataTables/table__
 
 <br/>
