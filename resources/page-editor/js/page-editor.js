@@ -71,6 +71,11 @@ var configure = function() {
     }
 	
 	var turnOnEditors = function() {
+		if(pageEditorConfiguration.preconvertEditor) {
+			$('.edit-content-inline').each(function() {
+				pageEditorConfiguration.preconvertEditor(this)
+			})
+		}
 		$('.edit-content-inline').attr("contenteditable", "true").ckeditor(
 				{
 					on: {
