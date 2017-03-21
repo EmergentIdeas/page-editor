@@ -15,7 +15,7 @@ var getPossibleImages = function(url, callback) {
 	});
 }
 
-var UploadableImage = function(inputControl) {
+var UploadableImage = function(inputControl, onComplete) {
 	this.$inputControl = $(inputControl)
 	var prefix = this.$inputControl.attr('data-image-dir')
 	var self = this
@@ -39,6 +39,7 @@ var UploadableImage = function(inputControl) {
 			self.$inputControl.val(finalUrl);
 		}, prefix)
 		self.img = img
+		img.onComplete = onComplete
 		img.render()
 	})
 }

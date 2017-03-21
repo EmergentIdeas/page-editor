@@ -18,6 +18,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
+import com.emergentideas.page.editor.data.Link;
 import com.emergentideas.page.editor.helpers.ResourceDisplayComparator;
 import com.emergentideas.page.editor.helpers.ResourceDisplayEntry;
 import com.emergentideas.page.editor.interfaces.TemplateRewriter;
@@ -76,6 +77,22 @@ public class PageEditorService {
 				}
 			}
 		}
+	}
+	
+	public List<Link> getAllPages(StreamableResourceSource source) {
+		List<String> directoryNames = new ArrayList<String>();
+		getDescendentDirectoryNames(source, "", directoryNames);
+		
+		List<Link> pagePaths = new ArrayList<Link>();
+		for(String dir : directoryNames) {
+			for(String page : getTemplateNamesInDirectory(source, dir.substring(1))) {
+				if(page.endsWith(".html") == false) {
+					continue;
+				}
+				pagePaths.add(new Link(page, dir + "/" + page));
+			}
+		}
+		return pagePaths;
 	}
 
 	public void copyTemplate(StreamableResourceSink sink, String sourceLocation, String sourceName, String destinationTemplatePath) throws IOException {

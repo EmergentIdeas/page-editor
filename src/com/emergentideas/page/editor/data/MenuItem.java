@@ -28,6 +28,10 @@ public class MenuItem {
 	@Column(length = 10000)
 	protected String itemUrl;
 	
+	@Column(length = 10000)
+	protected String image;
+	
+
 	protected int leftBound;
 	
 	protected int rightBound;
@@ -97,5 +101,28 @@ public class MenuItem {
 
 	public void setChildren(List<MenuItem> children) {
 		this.children = children;
+	}
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public int getLeftBound() {
+		return leftBound;
+	}
+
+	public void setLeftBound(int leftBound) {
+		this.leftBound = leftBound;
+	}
+
+	public int getRightBound() {
+		return rightBound;
+	}
+
+	public void setRightBound(int rightBound) {
+		this.rightBound = rightBound;
 	}
 }

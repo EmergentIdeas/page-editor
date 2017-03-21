@@ -15,6 +15,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -91,6 +92,36 @@ public class FilesHandle {
 		Collections.sort(destinations);
 		
 		return "page-editor/create-page";
+	}
+
+	@GET
+	@Path("api/all-pages")
+	@Template
+	@JSON
+	@RolesAllowed("page-editors")
+	public Object allPages(Location location) {
+		return pageEditorService.getAllPages(findPagesSink(location));
+	}
+	
+	@POST
+	@Path("api/write/{path:.*}")
+	@Template
+	@RolesAllowed("page-editors")
+	public Object writeFile(Location location, String path, String data, FileItem contents) throws IOException {
+		if(isInsecurePath(path)) {
+			return new CouldNotHandle() {
+			};
+		}
+
+		byte[] dataToWrite;
+		if(StringUtils.isBlank(data)) {
+			dataToWrite = contents.get();
+		}
+		else {
+			dataToWrite = Base64.decodeBase64(data);
+		}
+		writeFileToStatic(location, path, dataToWrite);
+		return "success";
 	}
 	
 	@POST
