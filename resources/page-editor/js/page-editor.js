@@ -180,8 +180,8 @@ function transformToSlug(title) {
 function sdbmCode(str){
     var hash = 0;
     for (i = 0; i < str.length; i++) {
-        char = str.charCodeAt(i);
-        hash = char + (hash << 6) + (hash << 16) - hash;
+        var charout = str.charCodeAt(i);
+        hash = charout + (hash << 6) + (hash << 16) - hash;
     }
     return hash;
 }
