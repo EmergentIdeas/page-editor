@@ -64,7 +64,11 @@ var configure = function() {
     	
     	if(inputIdentifier && "" != inputIdentifier) {
     		if(editorObject.checkDirty()) {
-    			$(inputIdentifier).val(editorObject.getData());
+				var editorData = editorObject.getData()
+				if(pageEditorConfiguration.preSaveEditor) {
+					editorData = pageEditorConfiguration.preSaveEditor(editorData)
+				}
+    			$(inputIdentifier).val(editorData);
     			enablePageSave();
     		}
     	}
