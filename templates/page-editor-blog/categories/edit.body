@@ -1,0 +1,7 @@
+<h1>Edit Layout</h1>
+
+<form action="/blog-categories/__id__" method="post" >
+	__::page-editor-blog/categories/fields__
+	<br/>
+	<button class="btn btn-primary" type="submit">Save</button>
+</form>

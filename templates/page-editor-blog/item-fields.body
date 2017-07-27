@@ -43,6 +43,8 @@
 					<textarea class="form-control" id="description" name="description" rows="4"></textarea>
 				</div>
 			</div>
+			__showCategories::page-editor-blog/item/categories__
+			__showAuthors??::page-editor-blog/item/authors__
 			<div class="control-group">
 				<label class="control-label" >Current attachments</label>
 				<div class="controls">
@@ -55,6 +57,7 @@
 					<input type="file" class="form-control blog-item-attachment-file" name="file1" />
 				</div>
 			</div>
+			
 		</div>
 		
 	</div>

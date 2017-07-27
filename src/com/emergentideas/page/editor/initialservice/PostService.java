@@ -12,6 +12,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
 
 import com.emergentideas.page.editor.data.Author;
+import com.emergentideas.page.editor.data.AuthorInterface;
 import com.emergentideas.page.editor.data.Category;
 import com.emergentideas.page.editor.data.Category.CategoryType;
 import com.emergentideas.page.editor.data.Comment;
@@ -20,9 +21,10 @@ import com.emergentideas.page.editor.data.Item.PubStatus;
 import com.emergentideas.page.editor.data.Item;
 import com.emergentideas.page.editor.data.Layout;
 import com.emergentideas.page.editor.data.SiteSet;
+import com.emergentideas.page.editor.interfaces.AuthorsServiceInterface;
 
 @Resource
-public class PostService {
+public class PostService implements AuthorsServiceInterface {
 	
 	@Resource
 	protected EntityManager entityManager;
@@ -118,6 +120,20 @@ public class PostService {
 		return null;
 	}
 	
+	public List<AuthorInterface> getAuthors() {
+		return entityManager.createQuery("select a from Author a").getResultList();
+	}
+	
+	public AuthorInterface getAuthor(int id) {
+		List<AuthorInterface> l = entityManager.createQuery("select a from Author a where id = :id").setParameter("id", id).getResultList();
+		if(l.size() > 0) {
+			return l.get(0);
+		}
+		
+		return null;
+	}
+
+	
 	public Category getCategory(String slug, CategoryType type) {
 		List<Category> l = entityManager.createQuery("select c from Category c where slug = :slug").setParameter("slug", slug).getResultList();
 		if(type == null) {
@@ -135,6 +151,19 @@ public class PostService {
 		return null;
 	}
 	
+	public Category getCategory(int id) {
+		List<Category> l = entityManager.createQuery("select c from Category c where id = :id").setParameter("id", id).getResultList();
+		if(l.size() > 0) {
+			return l.get(0);
+		}
+		
+		return null;
+	}
+	
+	public List<Category> getCategories() {
+		return entityManager.createQuery("select c from Category c").getResultList();
+	}
+
 	public List<Comment> getComments(String slug) {
 		return entityManager.createQuery("select c from Comment c join c.item it where it.slug = :slug")
 			.setParameter("slug", "slug").getResultList();

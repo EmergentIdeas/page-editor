@@ -1,0 +1,4 @@
+<label>
+<input class="form-control" type="checkbox" placeholder="" name="category" value="__id__" /> 
+	__name__
+</label>

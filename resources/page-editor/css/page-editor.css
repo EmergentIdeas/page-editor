@@ -232,3 +232,13 @@
 div.dialog-frame {
 	z-index: 10100;
 }
+
+.check-list label {
+	display: block;
+}
+
+.check-list input[type=checkbox] {
+	display: inline-block;
+	width: auto;
+   	vertical-align: middle;
+}

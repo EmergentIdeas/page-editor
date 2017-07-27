@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,8 +27,8 @@ public class Item {
 	@GeneratedValue
 	protected Integer id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	protected Author author;
+	@ElementCollection
+	protected List<Integer> authors = new ArrayList<Integer>();
 	
 	@Lob
 	@Column(length = 1000)
@@ -66,6 +67,13 @@ public class Item {
 	
 	@OneToMany(cascade = {CascadeType.ALL})
 	protected List<Attachment> attachments = new ArrayList<Attachment>();
+	
+	public Integer getPrimaryAuthorId() {
+		if(authors != null && authors.size() > 0) {
+			return authors.get(0);
+		}
+		return null;
+	}
 
 	public int getCommentCount() {
 		return comments.size();
@@ -94,18 +102,29 @@ public class Item {
 		this.id = id;
 	}
 
-	public Author getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(Author author) {
-		this.author = author;
-	}
+//	public AuthorInterface getAuthor() {
+//		return author;
+//	}
+//
+//	public void setAuthor(AuthorInterface author) {
+//		this.author = author;
+//	}
+	
+	
 
 	public String getTitle() {
 		return title;
 	}
 
+	public List<Integer> getAuthors() {
+		return authors;
+	}
+
+	public void setAuthors(List<Integer> authors) {
+		this.authors = authors;
+	}
+
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}

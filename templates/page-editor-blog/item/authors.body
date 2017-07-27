@@ -1,0 +1,8 @@
+		<div class="control-group">
+			<label class="control-label" for="authorId">Author</label>
+			<div class="controls">
+				<select class="form-control" id="authorId" name="authorId">
+					__authorsList::page-editor-blog/author-option__
+				</select>
+			</div>
+		</div>

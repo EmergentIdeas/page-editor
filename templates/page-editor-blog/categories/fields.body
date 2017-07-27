@@ -1,0 +1,19 @@
+<div class="category-item-fields">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="control-group">
+				<label class="control-label" for="name">Name</label>
+				<div class="controls">
+					<input class="form-control slug-source" type="text" id="name" name="name" />
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="slug">Slug (a short name for URLs)</label>
+					<div class="controls">
+						<input class="form-control" type="text" id="slug" name="slug" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+		

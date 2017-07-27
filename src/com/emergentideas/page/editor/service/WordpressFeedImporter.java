@@ -107,7 +107,8 @@ public class WordpressFeedImporter {
 			
 			String authorShortName = getElementContent(itemElement, "dc:creator");
 			Author author = getAuthor(site, authorShortName);
-			item.setAuthor(author);
+			item.getAuthors().add(author.getId());
+//			item.setAuthor(author);
 			
 			transformContent(item);
 		}

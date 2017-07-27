@@ -138,8 +138,6 @@ var configure = function() {
 		$attachment.remove();
 	});
 	
-	
-	
 	$('.blog-post-form').on('change', 'input.blog-item-attachment-file', function(event) { 
 		if(typeof(fileNum) === 'undefined') {
 			fileNum = 2;

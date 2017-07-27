@@ -1,0 +1,7 @@
+<h1>Create Category</h1>
+
+<form action="/blog-categories/create" method="post" >
+	__::page-editor-blog/categories/fields__
+	<br/>
+	<button class="btn btn-primary" type="submit">Create</button>
+</form>
