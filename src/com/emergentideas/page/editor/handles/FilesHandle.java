@@ -468,31 +468,59 @@ public class FilesHandle {
 	@GET
 	public Object showThumbnailImage(Location location, HttpServletResponse response, String path,
 			ServletContext servletContext, @Name("If-None-Match") String existingETag,
-			HttpServletRequest request) throws IOException, InterruptedException {
+			HttpServletRequest request, String resizeWidth) throws IOException, InterruptedException {
 		if(findStaticSink(location).get(path) == null || isPathImage(path) == false) {
 			return new NoResponse();
 		}
 		
-		Resource rsc = thumbsSink.get(removeSlashes(path));
+		if(StringUtils.isBlank(resizeWidth)) {
+			resizeWidth = this.resizeWidth;
+		}
+		if(resizeWidth.indexOf('x') < 0) {
+			resizeWidth += "x";
+		}
+		resizeWidth = cleanResize(resizeWidth);
+		
+		String thumbnailPath = createResizePath(removeSlashes(path), resizeWidth);
+		Resource rsc = thumbsSink.get(thumbnailPath);
 		if(rsc == null) {
 			createThumbnail(location, path, resizeWidth);
 		}
 		
-		return thumbsHandle.handle(path, servletContext, existingETag, location, request);
+		return thumbsHandle.handle(thumbnailPath, servletContext, existingETag, location, request);
+	}
+	
+	protected String createResizePath(String path, String resizeWidth) {
+		int period = path.lastIndexOf('.');
+		return path.substring(0, period) + "-" + resizeWidth + path.substring(period);
+		
+	}
+	
+	protected String cleanResize(String s) {
+		StringBuilder sb = new StringBuilder();
+		for(char c : s.toCharArray()) {
+			if(Character.isDigit(c) || c == 'x') {
+				sb.append(c);
+			}
+		}
+		return sb.toString();
 	}
 
 	protected void createThumbnail(Location location, String path, String width) throws IOException, InterruptedException {
+		
 		Resource rsc = findStaticSink(location).get(path);
 		if(rsc != null && rsc instanceof StreamableResource) {
-			String thumbPath = path;
+			String thumbPath = createResizePath(removeSlashes(path), width);
 			StreamableResource in = (StreamableResource)rsc;
 			
-			thumbsSink.write(thumbPath, in.getContent());
+			thumbsSink.write(path, in.getContent());
 			
 			
-			String absolute = "/" + createPath(thumbsRoot.getAbsolutePath(), thumbPath);
-			String command = String.format("convert -resize %s %s %s", width, absolute, absolute);
-			Runtime.getRuntime().exec(command).waitFor();
+			String absoluteOrigin = "/" + createPath(thumbsRoot.getAbsolutePath(), path);
+			String absoluteDestination = "/" + createPath(thumbsRoot.getAbsolutePath(), thumbPath);
+			String command = String.format("convert -resize %s '%s' '%s'", width, absoluteOrigin, absoluteDestination);
+//			Runtime.getRuntime().exec(command).waitFor();
+			Runtime.getRuntime().exec(new String[] { "convert", "-resize", width, absoluteOrigin, absoluteDestination}).waitFor();
 		}
 	}
 
