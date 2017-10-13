@@ -209,7 +209,7 @@ public class PagesHandle implements Integrator {
 					String parmName = getParameterName(section);
 					String value = request.getParameter(parmName);
 					
-					if(StringUtils.isNotBlank(value)) {
+					if(value != null && value.length() > 0) {
 						replaceContent(section, value);
 						
 						String newContent = doc.select("body").html();

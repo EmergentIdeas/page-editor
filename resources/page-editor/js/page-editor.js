@@ -68,6 +68,9 @@ var configure = function() {
 				if(pageEditorConfiguration.preSaveEditor) {
 					editorData = pageEditorConfiguration.preSaveEditor(editorData)
 				}
+				if(!editorData) {
+					editorData = ' '
+				}
     			$(inputIdentifier).val(editorData);
     			enablePageSave();
     		}
