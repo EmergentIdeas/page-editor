@@ -9,7 +9,7 @@
     "yuicompressor": "latest"
   },
   "dependencies": {
-    "jquery": "1.12.2",
+    "jquery": "3.5.1",
     "jquery-ui": "latest",
 	"bootstrap": "latest",
 	"ei-pic-browser": "git+ssh://git@git.emergentideas.com:ei-pic-browser.git",
