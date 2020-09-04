@@ -1,5 +1,5 @@
 <div class="view-file-entry">
 	<span class="__iconClass__">&nbsp;</span>
 	<a href="__viewPath__">__name__</a>
-	__isFile??$this::page-editor/file-entry-delete__
+	__$this::page-editor/file-entry-delete__
 </div>

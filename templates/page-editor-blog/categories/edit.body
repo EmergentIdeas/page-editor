@@ -1,4 +1,4 @@
-<h1>Edit Layout</h1>
+<h1>Edit Category</h1>
 
 <form action="/blog-categories/__id__" method="post" >
 	__::page-editor-blog/categories/fields__

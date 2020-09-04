@@ -208,6 +208,7 @@ public class PagesHandle implements Integrator {
 					Element section = inlineSections.get(sectionIndex);
 					String parmName = getParameterName(section);
 					String value = request.getParameter(parmName);
+					value = value.replaceAll("__", "__::dus__");
 					
 					if(value != null && value.length() > 0) {
 						replaceContent(section, value);

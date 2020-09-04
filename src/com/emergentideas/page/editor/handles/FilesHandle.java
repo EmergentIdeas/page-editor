@@ -36,6 +36,7 @@ import com.emergentideas.webhandle.files.DirectoryManipulator;
 import com.emergentideas.webhandle.files.DirectoryResource;
 import com.emergentideas.webhandle.files.FileStreamableResource;
 import com.emergentideas.webhandle.files.FileStreamableResourceSink;
+import com.emergentideas.webhandle.files.NamedResource;
 import com.emergentideas.webhandle.files.Resource;
 import com.emergentideas.webhandle.files.StreamableResource;
 import com.emergentideas.webhandle.files.StreamableResourceSink;
@@ -384,24 +385,42 @@ public class FilesHandle {
 			return new Show(referer);
 		}
 		
+		String dirPrefix = "files/view/";
+		if(path.startsWith(dirPrefix)) {
+			path = path.substring(dirPrefix.length());
+		}
+		
 		if(isInsecurePath(path)) {
 			return new CouldNotHandle() {
 			};
 		}
 		
 		StreamableResourceSink sink = findStaticSink(location);
-		if(sink.get(path) != null) {
-			sink.delete(path);
+		Resource r = sink.get(path); 
+		if(r != null) {
+			recursiveDelete(r, sink, path);
 			messages.getInfoMessages().add("Deleted " + path);
 		}
 		else {
 			sink = findPagesResourceSource(location);
-			if(sink.get(path) != null) {
-				sink.delete(path);
+			r = sink.get(path); 
+			if(r != null) {
+				recursiveDelete(r, sink, path);
 				messages.getInfoMessages().add("Deleted " + path);
 			}
 		}
 		return new Show(referer);
+	}
+	
+	public void recursiveDelete(Resource focus, StreamableResourceSink sink, String path) 
+		throws IOException {
+		if(focus instanceof DirectoryResource) {
+			DirectoryResource dr = (DirectoryResource)focus;
+			for(Resource child : dr.getEntries()) {
+				recursiveDelete(child, sink, path + "/" + ((NamedResource)child).getName());
+			}
+		}
+		sink.delete(path);
 	}
 	
 	@Path("thumbnails/urls/{path:.*}")
