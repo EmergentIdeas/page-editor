@@ -123,7 +123,7 @@
             </path>
 
             <!-- Compile the java code from ${src} into ${dist} -->
-            <javac nowarn="on" srcdir="${testSrc}" destdir="${testAppBin}" target="1.6" source="1.6" debug="true" debuglevel="lines,vars,source">
+            <javac nowarn="on" srcdir="${testSrc}" destdir="${testAppBin}" target="1.7" source="1.7" debug="true" debuglevel="lines,vars,source">
                     <classpath refid="ivy.deps" />
             </javac>
 
@@ -151,7 +151,7 @@
 		</path>
 		
 		<!-- Compile the java code from ${src} into ${dist} -->
-		<javac nowarn="on" srcdir="${src}" destdir="${dist}" target="1.6" source="1.6" debug="true" debuglevel="lines,vars,source">
+		<javac nowarn="on" srcdir="${src}" destdir="${dist}" target="1.7" source="1.7" debug="true" debuglevel="lines,vars,source">
 			<classpath refid="ivy.deps" />
 		</javac>
 
